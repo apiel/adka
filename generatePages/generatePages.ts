@@ -25,7 +25,7 @@ export async function generatePages() {
         ],
     })) {
         const file = entry.path;
-        const { default: page } = await import(file);
+        const { default: page } = await import(`file://${file}`);
         pagePaths[page.linkId] = {
             file,
             page,
