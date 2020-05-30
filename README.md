@@ -8,7 +8,7 @@ CSS and VanillaJs become more and more powerful providing a lot of features, slo
 
 > **Note:** install is not mendatory to use adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/latest/adka.ts`
 
-Use deno install: https://deno.land/manual/tools/script_installer
+Use deno installer: https://deno.land/manual/tools/script_installer
 
 ```sh
 deno install -f --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/latest/adka.ts
@@ -156,9 +156,9 @@ function Main() {
 export default page(Main);
 ```
 
-In case you need fragment like `React.fragment`, you can use `Fragment` from the `radka` library:
+In case you need fragment like `React.fragment`, you can use `Fragment` from the `adka` module:
 
-```jsx
+```tsx
 import {
     React,
     Fragment,
@@ -181,8 +181,8 @@ export function Hello({ name }: Props) {
 ## Folder and file structure
 
 -   pages are in `src/pages`
-    -   page file should end by `.page.jsx`
-    -   page can be named with `[name]` to create dynamic path e.g. `src/pages/[id].page.jsx`
+    -   page file should end by `.page.tsx`
+    -   page can be named with `[name]` to create dynamic path e.g. `src/pages/[id].page.tsx`
 -   components are in `src/components`
 
 ## Troubleshooting
