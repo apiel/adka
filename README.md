@@ -184,3 +184,30 @@ export function Hello({ name }: Props) {
     -   page file should end by `.page.jsx`
     -   page can be named with `[name]` to create dynamic path e.g. `src/pages/[id].page.jsx`
 -   components are in `src/components`
+
+## Troubleshooting
+
+In case you get the following error:
+
+> JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+Create the following file `src/jsx.d.ts`:
+
+```ts
+declare namespace JSX {
+    interface IntrinsicElements {
+        [elemName: string]: any;
+    }
+}
+```
+
+And include the reference in every jsx file, e.g.:
+
+```tsx
+/// <reference path="../jsx.d.ts" />
+import { React } from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export function Hello() {
+    return <p>Hello.</p>;
+}
+```

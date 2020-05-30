@@ -21,3 +21,10 @@ git tag --delete latest
 git push --delete origin latest
 git tag latest
 git push --tags
+
+## ToDo
+
+- asset
+- load bundle and js file
+- load css
+- turbolinks?

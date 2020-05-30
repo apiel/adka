@@ -1,3 +1,5 @@
+/// <reference path="./jsx.d.ts" />
+
 import { generatePages } from './generatePages/generatePages.ts';
 import { config, paths } from './config.ts';
 
