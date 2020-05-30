@@ -14,3 +14,10 @@ deno run -c tsconfig.json --allow-read --allow-write --allow-env --reload https:
 
 instead of deps
 https://deno.land/manual/linking_to_external_code/import_maps
+
+
+
+git tag --delete latest
+git push --delete origin latest
+git tag latest
+git push --tags
