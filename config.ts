@@ -1,5 +1,10 @@
-import 'https://deno.land/x/dotenv/load.ts';
+import { config as dotenv } from 'https://deno.land/x/dotenv/mod.ts';
+import { existsSync } from 'https://deno.land/std/fs/exists.ts';
 import { join, resolve } from 'https://deno.land/std/path/mod.ts';
+
+if (existsSync(`${Deno.cwd()}/.env`)) {
+    dotenv({ export: true });
+}
 
 const env = Deno.env.toObject();
 export const ROOT_FOLDER = env.ADKA_ROOT_FOLDER

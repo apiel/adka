@@ -1,10 +1,13 @@
 deno run -c tsconfig.json --allow-read --allow-write --allow-env generatePages/generatePages.ts
-deno run -c tsconfig.json --allow-read --allow-write --allow-env build.ts
+deno run -c tsconfig.json --allow-read --allow-write --allow-env adka.ts
 
 https://aralroca.com/blog/from-node-to-deno#webpack-parcel-rollup
 
 https://deno.land/manual/tools/script_installer
-deno install -f --allow-read --allow-write --allow-env https://raw.githubusercontent.com/apiel/adka/master/adka.ts
+deno install -f --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts
+
+deno run -c tsconfig.json --allow-read --allow-write --allow-env --reload https://raw.githubusercontent.com/apiel/adka/master/adka.ts
+
 
 
 
