@@ -29,8 +29,8 @@ export async function generatePages() {
     for await (const entry of walk(paths.srcPages, {
         match: [globToRegExp(`${paths.srcPages}/**/*${config.pagesSuffix}.tsx`)],
     })) {
-        const file = `.${SEP}${entry.path}`;
-        const { default: page } = await import(file);
+        const file = entry.path;
+        const { default: page } = await import(join(Deno.cwd(), file));
         pagePaths[page.linkId] = {
             file,
             page,
@@ -78,26 +78,3 @@ export async function generatePage(pagePath: PagePath, pagePaths: PagePaths) {
 //         await generateDynamicPage(pagePath, pagePaths, htmlPath, next);
 //     }
 // }
-
-// export async function collectPagePaths(): Promise<PagePaths> {
-//     const files = await globAsync(
-//         join(paths.tmpPages, '**', `*${config.pagesSuffix}.js`),
-//     );
-//     log('Pages component founds', files);
-//     const pagePaths = {};
-//     // First cleanup cache separetly else it will interfer with page-ids
-//     files.forEach((file) => delete require.cache[file]);
-//     files.forEach((file) => {
-//         (global as any).r_ka_imports = []; // clean up before appending import
-//         const page: Page = require(file).default;
-//         pagePaths[page.linkId] = {
-//             file,
-//             page,
-//             imports: (global as any).r_ka_imports,
-//         };
-//     });
-//     // console.log('keys', Object.keys(pagePaths));
-//     return pagePaths;
-// }
-
-
