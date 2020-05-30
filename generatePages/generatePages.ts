@@ -1,12 +1,8 @@
-import {
-    join,
-    globToRegExp,
-} from 'https://deno.land/std/path/mod.ts';
+import { join, globToRegExp } from 'https://deno.land/std/path/mod.ts';
 import { walk } from 'https://deno.land/std/fs/walk.ts';
 import { Page } from '../mod.ts';
 import { getRoutePath } from './getRoutePath.ts';
-import paths from '../paths.ts';
-import config from '../config.ts';
+import { config, paths } from '../config.ts';
 import { saveComponentToHtml } from './saveComponentToHtml.ts';
 import { generateDynamicPage } from './generateDynamicPage.ts';
 
@@ -18,15 +14,18 @@ export interface PagePath {
 }
 export type PagePaths = { [pathId: string]: PagePath };
 
-generatePages();
-
 export async function generatePages() {
     const pagePaths: PagePaths = {};
+    console.log('paths.srcPages', paths.srcPages);
     for await (const entry of walk(paths.srcPages, {
-        match: [globToRegExp(`${paths.srcPages}/**/*${config.pagesSuffix}.tsx`)],
+        match: [
+            globToRegExp(
+                join(paths.srcPages, '**', `*${config.pagesSuffix}.tsx`),
+            ),
+        ],
     })) {
         const file = entry.path;
-        const { default: page } = await import(join(Deno.cwd(), file));
+        const { default: page } = await import(file);
         pagePaths[page.linkId] = {
             file,
             page,

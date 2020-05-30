@@ -5,8 +5,8 @@ import {
     dirname,
 } from 'https://deno.land/std/path/mod.ts';
 
-import paths from '../paths.ts';
-import config from '../config.ts';
+import { config, paths } from '../config.ts';
+
 
 export function getRoutePath(file: string, glue = join) {
     const filename = basename(file, `${config.pagesSuffix}${extname(file)}`);

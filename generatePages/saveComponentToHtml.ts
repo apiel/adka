@@ -4,7 +4,7 @@ import { writeFileStr } from 'https://deno.land/std/fs/write_file_str.ts';
 import { Props } from '../mod.ts';
 import { PagePath, PagePaths } from './generatePages.ts';
 import { getRoutePath } from './getRoutePath.ts';
-import config from '../config.ts';
+import { config } from '../config.ts';
 import { applyPropsToPath } from './applyPropsToPath.ts';
 import { urlJoin } from '../deps.ts';
 
