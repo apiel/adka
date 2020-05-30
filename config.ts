@@ -6,6 +6,8 @@ export const ROOT_FOLDER = env.ADKA_ROOT_FOLDER
     ? resolve(env.ADKA_ROOT_FOLDER)
     : Deno.cwd();
 
+console.log('ROOT_FOLDER', ROOT_FOLDER);
+
 export let config = {
     srcFolder: env.ADKA_SRC_FOLDER || 'src',
     distStatic: env.ADKA_DIST_FOLDER || 'site',
