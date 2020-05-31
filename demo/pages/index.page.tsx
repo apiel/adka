@@ -5,8 +5,14 @@ import { Hello } from '../components/Hello.tsx';
 import Item from './item/[id].page.tsx';
 
 function Home() {
+    const color = 'green';
     return (
         <section>
+            <style>{`
+            :root {
+                --color: ${color};
+            }
+            `}</style>
             {css('./index.css')}
             <h1>Homepage</h1>
             {/* <Import src={import('./index.script.ts')} /> */}
@@ -18,7 +24,9 @@ function Home() {
                     border-color: blue;
                 }
             `}</style>
-            <button id="login-btn" style="color: red">Log In</button>
+            <button id="login-btn" style="color: red">
+                Log In
+            </button>
             <a href={Item.link({ id: 3 })}>link</a>
             <a href={Item.link({ id: 2 })}>link</a>
             <p id="counter">none</p>

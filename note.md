@@ -12,7 +12,8 @@ https://deno.land/manual/linking_to_external_code/import_maps
 - test
 
 - asset
+- inline js? like inline css
 - load bundle and js file
     https://aralroca.com/blog/from-node-to-deno#webpack-parcel-rollup
-- load css
+- bundle css / scss
 - turbolinks?

@@ -238,6 +238,38 @@ export function Hello() {
 }
 ```
 
+To pass variables to the CSS, use the [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties):
+
+```css
+/* hello.css */
+p {
+    color: --color;
+}
+```
+
+```tsx
+import {
+    React,
+    Fragment,
+    css,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export function Hello() {
+    const color = 'blue';
+    return (
+        <Fragment>
+            <style>{`
+            :root {
+                --color: ${color};
+            }
+            `}</style>
+            {css('./hello.css)}
+            <p>Hello</p>
+        </Fragment>
+    );
+}
+```
+
 ## Folder and file structure
 
 -   pages are in `src/pages`
