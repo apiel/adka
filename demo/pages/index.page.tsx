@@ -1,6 +1,6 @@
 /// <reference path="../../jsx.d.ts" />
 
-import { jsx, page, css } from '../../mod.ts';
+import { jsx, page, css, script } from '../../mod.ts';
 import { Hello } from '../components/Hello.tsx';
 import Item from './item/[id].page.tsx';
 
@@ -31,6 +31,8 @@ function Home() {
             <a href={Item.link({ id: 2 })}>link</a>
             <p id="counter">none</p>
             {/* <img src={import('../assets/radka.jpg')} alt=""/> */}
+
+            {script('./index.script.ts')}
         </section>
     );
 }

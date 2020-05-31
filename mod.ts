@@ -3,6 +3,7 @@ import { jsxHtml } from './deps.ts';
 const { jsx, React, Fragment } = jsxHtml;
 
 export { css } from './components/css.ts';
+export { script } from './components/script.ts';
 export { jsx, React, Fragment };
 
 let linkIdSeq = 0;
