@@ -178,6 +178,66 @@ export function Hello({ name }: Props) {
 }
 ```
 
+## CSS
+
+Css work differently as in React, CSS in JS is not supported ~~`<div style={{ color: 'blue' }}>`~~ instead use normal string as in HTML `<div style="color: blue">`.
+
+For inline style:
+
+```tsx
+import {
+    React,
+    Fragment,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export function Hello() {
+    return (
+        <Fragment>
+            <style>{`
+                p {
+                    color: blue;
+                }
+                .bold {
+                    font-weight: bold;
+                }
+            `}</style>
+            <p>Hello</p>
+            <p class="bold">Line 2.</p>
+        </Fragment>
+    );
+}
+```
+
+You can as well, use a CSS file as inline style:
+
+```css
+/* hello.css */
+p {
+    color: blue;
+}
+.bold {
+    font-weight: bold;
+}
+```
+
+```tsx
+import {
+    React,
+    Fragment,
+    css,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export function Hello() {
+    return (
+        <Fragment>
+            {css('./hello.css)}
+            <p>Hello</p>
+            <p class="bold">Line 2.</p>
+        </Fragment>
+    );
+}
+```
+
 ## Folder and file structure
 
 -   pages are in `src/pages`

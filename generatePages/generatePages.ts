@@ -16,7 +16,6 @@ export type PagePaths = { [pathId: string]: PagePath };
 
 export async function generatePages() {
     const pagePaths: PagePaths = {};
-    console.log('paths.srcPages', paths.srcPages);
     for await (const entry of walk(paths.srcPages, {
         match: [
             globToRegExp(
