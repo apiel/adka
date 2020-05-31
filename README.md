@@ -52,7 +52,7 @@ adka
 deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/latest/adka.ts
 ```
 
-This will create a new `site` folder containing the generated html files.
+This will create a new `site` folder containing the generated html file `/index.html`.
 
 Let's create another page but with dynamic content. Create a file `src/pages/pet/[type].page.jsx`:
 
