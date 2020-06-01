@@ -2,7 +2,7 @@ import { jsxHtml } from './deps.ts';
 
 const { jsx, React, Fragment } = jsxHtml;
 
-export { css } from './components/css.ts';
+export { css, cssSync } from './components/css.ts';
 export { script } from './components/script.ts';
 export { jsx, React, Fragment };
 

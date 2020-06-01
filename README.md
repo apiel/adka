@@ -283,10 +283,10 @@ import {
     css,
 } from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
 
-export function Hello() {
+export async function Hello() {
     return (
         <Fragment>
-            {css('./hello.css)}
+            {await css('./hello.css)}
             <p>Hello</p>
             <p class="bold">Line 2.</p>
         </Fragment>
@@ -310,7 +310,7 @@ import {
     css,
 } from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
 
-export function Hello() {
+export async function Hello() {
     const color = 'blue';
     return (
         <Fragment>
@@ -319,7 +319,7 @@ export function Hello() {
                 --color: ${color};
             }
             `}</style>
-            {css('./hello.css)}
+            {await css('./hello.css)}
             <p>Hello</p>
         </Fragment>
     );

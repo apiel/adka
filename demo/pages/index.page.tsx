@@ -13,7 +13,7 @@ async function Home() {
                 --color: ${color};
             }
             `}</style>
-            {css('./index.css')}
+            {await css('./index.css')}
             <h1>Homepage</h1>
             {/* <Import src={import('./index.script.ts')} /> */}
             <Hello name="abc" num={{ count: 123 }} />
