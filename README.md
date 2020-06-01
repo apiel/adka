@@ -431,6 +431,10 @@ export function Hello() {
 
 > **Note:** `src/assets` is omited from the path of the file.
 
+## Startup script
+
+Before to start generating the pages, it might be necessary to setup a working environment, either to bundle some SCSS file or some TS file for the assets, or to initiate a connection to a database. To do this, you can use the startup script: `src/start.ts`. This file is executed just after cleaning up the destination folder and before pages get generated.
+
 ## Folder and file structure
 
 -   pages are in `src/pages`
@@ -438,6 +442,7 @@ export function Hello() {
     -   page can be named with `[var]` to create dynamic path e.g. `src/pages/[id].page.tsx`
 -   components are in `src/components`
 -   assets are in `src/assets`
+-   startup script is `src/start.ts`
 
 ## Server side rendering
 

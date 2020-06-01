@@ -1,0 +1,1 @@
+console.log('Example of script executed when generator start.');

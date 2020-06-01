@@ -4,11 +4,6 @@ deno run -c tsconfig.json --allow-read --allow-write --allow-env --reload https:
 
 ## ToDo
 
-- before script / startup
-    - to bundle scss
-    - bundle ts file
-    - set db connection
-
 - load bundle and js file
     https://aralroca.com/blog/from-node-to-deno#webpack-parcel-rollup
 - bundle css / scss

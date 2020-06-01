@@ -11,6 +11,10 @@ export async function adka() {
     if (await exists(paths.distStatic)) {
         await Deno.remove(paths.distStatic, { recursive: true });
     }
+    if (await exists(paths.startScript)) {
+        console.info('Execute start script.');
+        await import(`file://${paths.startScript}`);
+    }
     await copy(paths.srcAssets, paths.distAssets);
     await generatePages();
 }

@@ -20,6 +20,7 @@ export let config = {
     pagesFolder: env.ADKA_PAGES_FOLDER || 'pages',
     pagesSuffix: env.ADKA_PAGES_SUFFIX || '.page',
     baseUrl: env.ADKA_BASE_URL || '',
+    startScript: env.ADKA_START_SCRIPT || 'start.ts',
 };
 
 export let paths = {
@@ -28,6 +29,7 @@ export let paths = {
     srcPages: '',
     srcAssets: '',
     distAssets: '',
+    startScript: '',
 };
 initPaths();
 
@@ -45,5 +47,6 @@ function initPaths() {
         srcPages: join(src, config.pagesFolder),
         srcAssets: join(src, config.assetsFolder),
         distAssets: join(distStatic, config.assetsFolder),
+        startScript: join(src, config.startScript),
     };
 }
