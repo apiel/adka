@@ -54,6 +54,8 @@ deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubus
 
 This will create a new `site` folder containing the generated html file `/index.html`.
 
+> In case you get the error "JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.", see troubleshooting in the bottom of the README.
+
 ### Dynamic pages
 
 Let's create another page but with dynamic content. Create a file `src/pages/pet/[type].page.jsx`:
@@ -186,7 +188,7 @@ export function Hello({ name }: Props) {
 
 ## Async component
 
-Unlike React, components can be asynchrone, so you can fetch for data without to handle states.
+Unlike React, components can be asynchrone, so you can fetch data without to handle states.
 
 ```tsx
 import {
@@ -414,7 +416,7 @@ TBD. (WIP)
 
 -   pages are in `src/pages`
     -   page file should end by `.page.tsx`
-    -   page can be named with `[name]` to create dynamic path e.g. `src/pages/[id].page.tsx`
+    -   page can be named with `[var]` to create dynamic path e.g. `src/pages/[id].page.tsx`
 -   components are in `src/components`
 
 ## Server side rendering
