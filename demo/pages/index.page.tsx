@@ -8,14 +8,8 @@ async function Home() {
     const color = 'green';
     return (
         <section>
-            <style>{`
-            :root {
-                --color: ${color};
-            }
-            `}</style>
-            {await css('./index.css')}
+            {await css('./index.css', { var: { color } })}
             <h1>Homepage</h1>
-            {/* <Import src={import('./index.script.ts')} /> */}
             <Hello name="abc" num={{ count: 123 }} />
             <input type="text" placeholder="email" />
             <input type="password" placeholder="password" />

@@ -4,20 +4,43 @@ import { jsxHtml } from '../deps.ts';
 import { getSrc } from './utils/getSrc.ts';
 const { ElementNode } = jsxHtml;
 
-export async function css(src: string) {
+export type CssVar = {[key: string]: string};
+export interface CssOptions {
+    var?: CssVar;
+}
+
+export async function css(src: string, options?: CssOptions) {
+    // getSrc must stay at this level
     const file = getSrc(src);
     if (!file) {
         return null;
     }
     const content = await readFileStr(file);
-    return new ElementNode('style', {}, [content]);
+    return cssRender(content, options);
 }
 
-export function cssSync(src: string) {
+export function cssSync(src: string, options?: CssOptions) {
+    // getSrc must stay at this level
     const file = getSrc(src);
     if (!file) {
         return null;
     }
     const content = readFileStrSync(file);
-    return new ElementNode('style', {}, [content]);
+    return cssRender(content, options);
+}
+
+function cssRender(content: string, options?: CssOptions) {
+    return new ElementNode('style', {}, [getVariables(options), content]);
+}
+
+function getVariables(options?: CssOptions) {
+    if (options?.var) {
+        let root = ':root {\n';
+        Object.keys(options.var).forEach(key => {
+            const value = options.var && options.var[key];
+            root += `--${key}: ${value};\n`;
+        });
+        root += '}\n';
+        return root;
+    }
 }

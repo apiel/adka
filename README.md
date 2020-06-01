@@ -319,7 +319,27 @@ export async function Hello() {
                 --color: ${color};
             }
             `}</style>
-            {await css('./hello.css)}
+            {await css('./hello.css')}
+            <p>Hello</p>
+        </Fragment>
+    );
+}
+```
+
+or
+
+```tsx
+import {
+    React,
+    Fragment,
+    css,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export async function Hello() {
+    const color = 'blue';
+    return (
+        <Fragment>
+            {await css('./hello.css', { var: { color } })}
             <p>Hello</p>
         </Fragment>
     );
@@ -377,6 +397,10 @@ export async function Hello() {
 ```
 
 > **Note**: now our component is asynchrone.
+
+## Asset
+
+TBD. (WIP)
 
 ## Folder and file structure
 
