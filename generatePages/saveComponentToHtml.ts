@@ -6,9 +6,7 @@ import { PagePath, PagePaths } from './generatePages.ts';
 import { getRoutePath } from './getRoutePath.ts';
 import { config } from '../config.ts';
 import { applyPropsToPath } from './applyPropsToPath.ts';
-import { urlJoin } from '../deps.ts';
-
-const { log } = console;
+import { urlJoin, info } from '../deps.ts';
 
 export async function saveComponentToHtml(
     { page }: PagePath,
@@ -16,7 +14,7 @@ export async function saveComponentToHtml(
     htmlPath: string,
     props?: Props,
 ) {
-    log('Generate page', htmlPath);
+    info('Generate page', htmlPath);
     let source = await (await page.component(props)).render();
     source = applyPropsToLinks(source, links);
 

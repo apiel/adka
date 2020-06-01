@@ -1,12 +1,12 @@
 import { join, globToRegExp } from 'https://deno.land/std/path/mod.ts';
 import { walk } from 'https://deno.land/std/fs/walk.ts';
+
+import { log } from '../deps.ts';
 import { Page } from '../mod.ts';
 import { getRoutePath } from './getRoutePath.ts';
 import { config, paths } from '../config.ts';
 import { saveComponentToHtml } from './saveComponentToHtml.ts';
 import { generateDynamicPage } from './generateDynamicPage.ts';
-
-const { info } = console;
 
 export interface PagePath {
     file: string;
@@ -39,7 +39,7 @@ export async function generatePages() {
 export async function generatePage(pagePath: PagePath, pagePaths: PagePaths) {
     const { file, page } = pagePath;
     const htmlPath = join(paths.distStatic, getRoutePath(file));
-    info('Load page component', file);
+    log('Load page component', file);
     if (page.getPropsList) {
         await generateDynamicPage(
             pagePath,

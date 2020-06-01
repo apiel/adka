@@ -2,6 +2,8 @@ import { config as dotenv } from 'https://deno.land/x/dotenv/mod.ts';
 import { existsSync } from 'https://deno.land/std/fs/exists.ts';
 import { join, resolve } from 'https://deno.land/std/path/mod.ts';
 
+import { log } from './deps.ts';
+
 if (existsSync(`${Deno.cwd()}/.env`)) {
     dotenv({ export: true });
 }
@@ -11,7 +13,7 @@ export const ROOT_FOLDER = env.ADKA_ROOT_FOLDER
     ? resolve(env.ADKA_ROOT_FOLDER)
     : Deno.cwd();
 
-console.log('ROOT_FOLDER', ROOT_FOLDER);
+log('ROOT_FOLDER', ROOT_FOLDER);
 
 export let config = {
     srcFolder: env.ADKA_SRC_FOLDER || 'src',

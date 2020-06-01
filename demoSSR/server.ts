@@ -36,7 +36,7 @@ router
 
 const app = new Application();
 app.addEventListener('error', (evt) => {
-    console.log(evt.error);
+    console.error(evt.error);
 });
 app.use(router.routes());
 app.use(router.allowedMethods());
