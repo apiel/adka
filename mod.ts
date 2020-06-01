@@ -2,6 +2,7 @@ import { jsxHtml } from './deps.ts';
 
 const { jsx, React, Fragment } = jsxHtml;
 
+export { asset } from './components/utils/asset.ts';
 export { css, cssSync } from './components/css.ts';
 export { script } from './components/script.ts';
 export { jsx, React, Fragment };

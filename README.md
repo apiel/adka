@@ -410,7 +410,26 @@ export async function Hello() {
 
 ## Assets
 
-TBD. (WIP)
+Put your assets in the folder `src/assets`, it will be copied to the generated site folder. For example, add an image `src/assets/image.png`. To use this file in your component, use the `asset` function:
+
+```tsx
+import {
+    React,
+    Fragment,
+    asset,
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
+
+export function Hello() {
+    return (
+        <Fragment>
+            <p>Hello</p>
+            <p><img src={asset('/image.png')} alt="" /></p>
+        </Fragment>
+    );
+}
+```
+
+> **Note:** `src/assets` is omited from the path of the file.
 
 ## Folder and file structure
 
@@ -418,6 +437,7 @@ TBD. (WIP)
     -   page file should end by `.page.tsx`
     -   page can be named with `[var]` to create dynamic path e.g. `src/pages/[id].page.tsx`
 -   components are in `src/components`
+-   assets are in `src/assets`
 
 ## Server side rendering
 
