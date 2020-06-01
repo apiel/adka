@@ -9,9 +9,7 @@ https://deno.land/manual/linking_to_external_code/import_maps
 
 ## ToDo
 
-- test
-
-- prefer to use master instead of latest
+- test > github workflow
 
 - asset
 - load bundle and js file

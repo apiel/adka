@@ -6,12 +6,12 @@ CSS and VanillaJs become more and more powerful providing a lot of features, slo
 
 ## Install adka
 
-> **Note:** install is not mendatory to use adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/latest/adka.ts`
+> **Note:** install is not mendatory to use adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts`
 
 Use deno installer: https://deno.land/manual/tools/script_installer
 
 ```sh
-deno install -f --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/latest/adka.ts
+deno install -f --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts
 ```
 
 On linux you might need to specify the deno bin path:
@@ -28,7 +28,7 @@ Create a folder `src/pages`. This folder will contain the pages. Create a file `
 import {
     React,
     page,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 function Main() {
     return (
@@ -49,7 +49,7 @@ Now you can transpile the jsx file, run:
 ```sh
 adka
 # or
-deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/latest/adka.ts
+deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts
 ```
 
 This will create a new `site` folder containing the generated html file `/index.html`.
@@ -64,7 +64,7 @@ Let's create another page but with dynamic content. Create a file `src/pages/pet
 import {
     React,
     page,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 interface Props {
     type: string;
@@ -100,7 +100,7 @@ We can add a link to the homepage:
 import {
     React,
     page,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 import Main from '../index.page.tsx';
 
 interface Props {
@@ -129,7 +129,7 @@ For pages with dynamic content, you can pass the props with in the link `Pet.lin
 Now, let's create a shared component. Create a file `src/components/Hello.jsx`:
 
 ```tsx
-import { React } from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+import { React } from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 interface Props {
     name: string;
@@ -146,7 +146,7 @@ Import this component in a page:
 import {
     React,
     page,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 import { Hello } from '../components/Hello';
 
 function Main() {
@@ -170,7 +170,7 @@ In case you need fragment like `React.fragment`, you can use `Fragment` from the
 import {
     React,
     Fragment,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 interface Props {
     name: string;
@@ -194,7 +194,7 @@ Unlike React, components can be asynchrone, so you can fetch data without to han
 import {
     React,
     Fragment,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export const Data = async () => {
     const res = await fetch('http://example.com/some/api');
@@ -211,7 +211,7 @@ Dynamic pages, can also be fetched asynchrounously. In the follwing example, see
 import {
     React,
     Fragment,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 interface Props {
     id: string;
@@ -253,7 +253,7 @@ For inline style:
 import {
     React,
     Fragment,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export function Hello() {
     return (
@@ -290,7 +290,7 @@ import {
     React,
     Fragment,
     css,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export async function Hello() {
     return (
@@ -317,7 +317,7 @@ import {
     React,
     Fragment,
     css,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export async function Hello() {
     const color = 'blue';
@@ -342,7 +342,7 @@ import {
     React,
     Fragment,
     css,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export async function Hello() {
     const color = 'blue';
@@ -363,7 +363,7 @@ As for CSS, you can embed some JavaScript into component:
 import {
     React,
     Fragment,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export function Hello() {
     return (
@@ -393,7 +393,7 @@ import {
     React,
     Fragment,
     script,
-} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export async function Hello() {
     return (
@@ -463,7 +463,7 @@ await app.listen({ port: 8000 });
 ```tsx
 // Item.tsx
 
-import { React } from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+import { React } from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 interface Props {
     id: string;
@@ -508,7 +508,7 @@ And include the reference in every jsx file, e.g.:
 
 ```tsx
 /// <reference path="../jsx.d.ts" />
-import { React } from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+import { React } from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 
 export function Hello() {
     return <p>Hello.</p>;
