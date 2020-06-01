@@ -230,9 +230,10 @@ export default page(Product, async () => ({
 ```
 
 This will generate:
-- site/Product/red/1/index.html
-- site/Product/blue/2/index.html
-- site/Product/green/3/index.html
+
+-   site/Product/red/1/index.html
+-   site/Product/blue/2/index.html
+-   site/Product/green/3/index.html
 
 ## CSS
 
@@ -372,6 +373,7 @@ export function Hello() {
 As the previous method is a bit tidious, you can as well embed an external `ts` file. The generator will bundle the file and inject it in the component as inline JavaScript. To bundle the TypeScript file, we use [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle), right now this deno feature is still work in progress, so you will have to use the parameter `--unstable` when executing adka.
 
 Now, let's create our script `src/components/hello.script.ts`:
+
 ```ts
 console.log('hello world');
 ```
@@ -408,6 +410,75 @@ TBD. (WIP)
     -   page file should end by `.page.tsx`
     -   page can be named with `[name]` to create dynamic path e.g. `src/pages/[id].page.tsx`
 -   components are in `src/components`
+
+## Server side rendering
+
+Adka is first intended to do SSG, but you can use it as well for server side rendering.
+Following is an example:
+
+```ts
+// server.ts
+import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
+import { Item } from './Item.tsx';
+
+const items = new Map<string, any>();
+items.set('a', {
+    id: 'a',
+    description: 'This item "a".',
+});
+items.set('b', {
+    id: 'b',
+    description: 'This item "b".',
+});
+
+const router = new Router();
+router
+    .get('/', (context: any) => {
+        context.response.body = 'Hello world!';
+    })
+    .get('/item/:id', async (context: any) => {
+        if (context?.params?.id && items.has(context.params.id)) {
+            const item = items.get(context.params.id);
+            const content = await Item(item).render();
+            context.response.type = 'text/html';
+            context.response.body = content;
+        }
+    });
+
+const app = new Application();
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+await app.listen({ port: 8000 });
+```
+
+```tsx
+// Item.tsx
+
+import { React } from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+interface Props {
+    id: string;
+    description: string;
+}
+
+export function Item({ id, description }: Props) {
+    return (
+        <div>
+            <h1>Item "{id}"</h1>
+            <p>{description}</p>
+        </div>
+    );
+}
+```
+
+Now run the server:
+
+```sh
+deno run --allow-read --allow-net server.ts
+```
+
+In your browser open the url http://127.0.0.1:8000/item/a
 
 ## Troubleshooting
 
