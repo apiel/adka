@@ -13,5 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: denolib/setup-deno@master
+      - run: deno --version
       - run: deno run -c tsconfig.json --allow-read --allow-write --allow-env --allow-net --unstable adka.ts
       - run: diff -r site .snapshot
