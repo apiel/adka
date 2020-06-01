@@ -6,7 +6,6 @@ export function getSrc(src: string) {
     if (src.startsWith('.')) {
         // !! caller must stay in this function
         const parentFile = caller(up + 1);
-        console.log('parentFile', parentFile);
         if (parentFile) {
             src = join(dirname(parentFile), src)
                 .replace('file:///', '/')

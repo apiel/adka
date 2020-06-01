@@ -23,7 +23,7 @@ export interface GetterPropsList {
     next?: GetPropsList;
 }
 
-export type GetPropsList = () => GetterPropsList;
+export type GetPropsList = () => GetterPropsList | Promise<GetterPropsList>;
 
 export interface Page {
     getPropsList: GetPropsList | undefined;

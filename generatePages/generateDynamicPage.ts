@@ -9,7 +9,7 @@ export async function generateDynamicPage(
     htmlPath: string,
     getPropsList: GetPropsList,
 ) {
-    const { propsList, next } = getPropsList();
+    const { propsList, next } = await getPropsList();
     if (propsList) {
         for (const props of propsList) {
             await saveComponentToHtml(

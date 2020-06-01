@@ -178,6 +178,56 @@ export function Hello({ name }: Props) {
 }
 ```
 
+## Async component
+
+Unlike React, components can be asynchrone, so you can fetch for data without to handle states.
+
+```tsx
+import {
+    React,
+    Fragment,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export const Data = async () => {
+    const res = await fetch('http://example.com/some/api');
+    const content = new Uint8Array(await res.arrayBuffer());
+
+    return <div>{content}</div>;
+};
+```
+
+Dynamic pages, can also be fetched asynchrounously. In the follwing example, see the second parameter of `page()`. Instead to be an array, it is an async function. This function return an object containing the list of props `propsList` and a `next` function. The `next` function is called when the first sets of pages is generated, this allow you to generate pages by chunks.
+
+```tsx
+import {
+    React,
+    Fragment,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+interface Props {
+    id: string;
+    color: string;
+}
+
+function Product({ id, color }: Props) {
+    return (
+        <div>
+            <h1>
+                Product {color} {id}
+            </h1>
+        </div>
+    );
+}
+
+export default page(Product, async () => ({
+    propsList: [
+        { id: '1', color: 'red' },
+        { id: '2', color: 'blue' },
+    ],
+    next: async () => ({ propsList: [{ id: '3', color: 'green' }] }),
+}));
+```
+
 ## CSS
 
 Css work differently as in React, CSS in JS is not supported ~~`<div style={{ color: 'blue' }}>`~~ instead use normal string as in HTML `<div style="color: blue">`.

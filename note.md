@@ -12,6 +12,8 @@ https://deno.land/manual/linking_to_external_code/import_maps
 - getProplist should be async
 - need a way to execute async
 
+- css easy variables
+
 - test
 
 - asset
