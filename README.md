@@ -199,6 +199,7 @@ export const Data = async () => {
 Dynamic pages, can also be fetched asynchrounously. In the follwing example, see the second parameter of `page()`. Instead to be an array, it is an async function. This function return an object containing the list of props `propsList` and a `next` function. The `next` function is called when the first sets of pages is generated, this allow you to generate pages by chunks.
 
 ```tsx
+// pages/Product/[color]/[id].page.tsx
 import {
     React,
     Fragment,
@@ -227,6 +228,11 @@ export default page(Product, async () => ({
     next: async () => ({ propsList: [{ id: '3', color: 'green' }] }),
 }));
 ```
+
+This will generate:
+- site/Product/red/1/index.html
+- site/Product/blue/2/index.html
+- site/Product/green/3/index.html
 
 ## CSS
 
