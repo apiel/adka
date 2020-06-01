@@ -488,6 +488,8 @@ deno run --allow-read --allow-net server.ts
 
 In your browser open the url http://127.0.0.1:8000/item/a
 
+> For hot reloading consider using https://deno.land/x/denon
+
 ## Troubleshooting
 
 In case you get the following error:
