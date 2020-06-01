@@ -11,6 +11,8 @@ https://deno.land/manual/linking_to_external_code/import_maps
 
 - test
 
+- prefer to use master instead of latest
+
 - asset
 - load bundle and js file
     https://aralroca.com/blog/from-node-to-deno#webpack-parcel-rollup

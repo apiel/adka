@@ -54,6 +54,8 @@ deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubus
 
 This will create a new `site` folder containing the generated html file `/index.html`.
 
+### Dynamic pages
+
 Let's create another page but with dynamic content. Create a file `src/pages/pet/[type].page.jsx`:
 
 ```tsx
@@ -120,6 +122,8 @@ Each page returns a link function, providing the url to access the page. So if t
 
 For pages with dynamic content, you can pass the props with in the link `Pet.link({type: 'dog'})`.
 
+### Shared component
+
 Now, let's create a shared component. Create a file `src/components/Hello.jsx`:
 
 ```tsx
@@ -155,6 +159,8 @@ function Main() {
 
 export default page(Main);
 ```
+
+### Fragment
 
 In case you need fragment like `React.fragment`, you can use `Fragment` from the `adka` module:
 
