@@ -4,7 +4,4 @@ deno run -c tsconfig.json --allow-read --allow-write --allow-env --reload https:
 
 ## ToDo
 
-- load bundle and js file
-    https://aralroca.com/blog/from-node-to-deno#webpack-parcel-rollup
-- bundle css / scss
 - turbolinks?

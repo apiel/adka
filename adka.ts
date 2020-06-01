@@ -6,14 +6,17 @@ import { generatePages } from './generatePages/generatePages.ts';
 import { config, paths } from './config.ts';
 
 export async function adka() {
-    console.log('Run adka', { config, paths });
+    console.log('Run adka');
 
     if (await exists(paths.distStatic)) {
         await Deno.remove(paths.distStatic, { recursive: true });
     }
     if (await exists(paths.startScript)) {
         console.info('Execute start script.');
-        await import(`file://${paths.startScript}`);
+        const start = await import(`file://${paths.startScript}`);
+        if (start?.default) {
+            await start.default({ config, paths });
+        }
     }
     await copy(paths.srcAssets, paths.distAssets);
     await generatePages();

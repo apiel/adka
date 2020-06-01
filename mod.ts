@@ -1,3 +1,4 @@
+import { config, paths } from './config.ts';
 import { jsxHtml } from './deps.ts';
 
 const { jsx, React, Fragment } = jsxHtml;
@@ -6,6 +7,11 @@ export { asset } from './components/utils/asset.ts';
 export { css, cssSync } from './components/css.ts';
 export { script } from './components/script.ts';
 export { jsx, React, Fragment };
+
+export interface Start {
+    config: typeof config,
+    paths: typeof paths,
+}
 
 let linkIdSeq = 0;
 

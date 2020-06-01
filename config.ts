@@ -17,6 +17,7 @@ export let config = {
     srcFolder: env.ADKA_SRC_FOLDER || 'src',
     distStatic: env.ADKA_DIST_FOLDER || 'site',
     assetsFolder: env.ADKA_ASSETS_FOLDER || 'assets',
+    bundlesFolder: env.ADKA_BUNDLES_FOLDER || 'bundles',
     pagesFolder: env.ADKA_PAGES_FOLDER || 'pages',
     pagesSuffix: env.ADKA_PAGES_SUFFIX || '.page',
     baseUrl: env.ADKA_BASE_URL || '',
@@ -30,6 +31,7 @@ export let paths = {
     srcAssets: '',
     distAssets: '',
     startScript: '',
+    srcBundles: '',
 };
 initPaths();
 
@@ -48,5 +50,6 @@ function initPaths() {
         srcAssets: join(src, config.assetsFolder),
         distAssets: join(distStatic, config.assetsFolder),
         startScript: join(src, config.startScript),
+        srcBundles: join(src, config.bundlesFolder),
     };
 }

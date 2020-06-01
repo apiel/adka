@@ -423,7 +423,9 @@ export function Hello() {
     return (
         <Fragment>
             <p>Hello</p>
-            <p><img src={asset('/image.png')} alt="" /></p>
+            <p>
+                <img src={asset('/image.png')} alt="" />
+            </p>
         </Fragment>
     );
 }
@@ -435,6 +437,63 @@ export function Hello() {
 
 Before to start generating the pages, it might be necessary to setup a working environment, either to bundle some SCSS file or some TS file for the assets, or to initiate a connection to a database. To do this, you can use the startup script: `src/start.ts`. This file is executed just after cleaning up the destination folder and before pages get generated.
 
+If your startup script return a default function, this one will be executed asynchrounsly and wait the end of the function before to start generating the pages:
+
+```ts
+import { delay } from 'https://deno.land/std/async/delay.ts';
+
+console.log('Example of script executed when generator start.');
+
+export default async function () {
+    await delay(3000);
+    console.log('wait a bit before to start');
+}
+```
+
+### JavaScript bundle
+
+Generating bundle is right now not part of adka generator since the [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle) API is still unstable. But you can generate the bundle from the startup script:
+
+```ts
+// src/bundles/main.ts
+console.log('Hello, I am the main bundle.');
+```
+
+```ts
+// src/start.ts
+import { Start } from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
+import { join } from 'https://deno.land/std/path/mod.ts';
+import { writeFileStr } from 'https://deno.land/std/fs/write_file_str.ts';
+
+export default async function ({ paths }: Start) {
+    const [, emit] = await Deno.bundle(join(paths.srcBundles, 'main.ts'));
+    await writeFileStr(join(paths.distAssets, 'bundle.js'));
+}
+```
+
+Finally in your layout:
+
+```tsx
+import {
+    React,
+    asset,
+} from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
+
+export function Layout({ children }) {
+    return (
+        <html>
+            <head></head>
+            <body>
+                {children}
+                <script type="module">{`
+                    import '${asset('/bundle.js')}'
+                `}</script>
+            </body>
+        </html>
+    );
+}
+```
+
 ## Folder and file structure
 
 -   pages are in `src/pages`
@@ -443,6 +502,7 @@ Before to start generating the pages, it might be necessary to setup a working e
 -   components are in `src/components`
 -   assets are in `src/assets`
 -   startup script is `src/start.ts`
+-   bundles are in `src/bundles`
 
 ## Server side rendering
 
