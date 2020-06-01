@@ -4,13 +4,11 @@ import { jsxHtml } from '../deps.ts';
 import { getSrc } from './utils/getSrc.ts';
 const { ElementNode } = jsxHtml;
 
-export function script(src: string) {
+export async function script(src: string) {
     const file = getSrc(src);
     if (!file) {
         return null;
     }
-    // Deno.bundle(file).then(([, emit]) => {
-    //     console.log('res bundle', emit);
-    // });
-    return new ElementNode('style', {}, ['content']);
+    const [, emit] = await Deno.bundle(file);
+    return new ElementNode('script', { innerHTML: emit }, []);
 }

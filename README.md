@@ -326,6 +326,58 @@ export function Hello() {
 }
 ```
 
+## Inline JS
+
+As for CSS, you can embed some JavaScript into component:
+
+```tsx
+import {
+    React,
+    Fragment,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export function Hello() {
+    return (
+        <Fragment>
+            <script>{`
+                console.log('hello world');
+            `}</script>
+            <p>Hello</p>
+            <p class="bold">Line 2.</p>
+        </Fragment>
+    );
+}
+```
+
+As the previous method is a bit tidious, you can as well embed an external `ts` file. The generator will bundle the file and inject it in the component as inline JavaScript. To bundle the TypeScript file, we use [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle), right now this deno feature is still work in progress, so you will have to use the parameter `--unstable` when executing adka.
+
+Now, let's create our script `src/components/hello.script.ts`:
+```ts
+console.log('hello world');
+```
+
+And in our component, we embed it:
+
+```tsx
+import {
+    React,
+    Fragment,
+    script,
+} from 'https://raw.githubusercontent.com/apiel/adka/latest/mod.ts';
+
+export async function Hello() {
+    return (
+        <Fragment>
+            {await script('./hello.script.ts')}
+            <p>Hello</p>
+            <p class="bold">Line 2.</p>
+        </Fragment>
+    );
+}
+```
+
+> **Note**: now our component is asynchrone.
+
 ## Folder and file structure
 
 -   pages are in `src/pages`

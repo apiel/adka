@@ -10,6 +10,7 @@ https://deno.land/manual/linking_to_external_code/import_maps
 ## ToDo
 
 - css easy variables
+- make css async
 
 - test
 

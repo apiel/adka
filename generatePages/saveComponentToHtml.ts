@@ -17,7 +17,7 @@ export async function saveComponentToHtml(
     props?: Props,
 ) {
     log('Generate page', htmlPath);
-    let source = await page.component(props).render();
+    let source = await (await page.component(props)).render();
     source = applyPropsToLinks(source, links);
 
     await ensureFile(htmlPath);

@@ -4,7 +4,7 @@ import { jsx, page, css, script } from '../../mod.ts';
 import { Hello } from '../components/Hello.tsx';
 import Item from './item/[id].page.tsx';
 
-function Home() {
+async function Home() {
     const color = 'green';
     return (
         <section>
@@ -32,7 +32,7 @@ function Home() {
             <p id="counter">none</p>
             {/* <img src={import('../assets/radka.jpg')} alt=""/> */}
 
-            {script('./index.script.ts')}
+            {await script('./index.script.ts')}
         </section>
     );
 }
