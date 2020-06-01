@@ -16,6 +16,7 @@ console.log('ROOT_FOLDER', ROOT_FOLDER);
 export let config = {
     srcFolder: env.ADKA_SRC_FOLDER || 'src',
     distStatic: env.ADKA_DIST_FOLDER || 'site',
+    assetsFolder: env.ADKA_ASSETS_FOLDER || 'assets',
     pagesFolder: env.ADKA_PAGES_FOLDER || 'pages',
     pagesSuffix: env.ADKA_PAGES_SUFFIX || '.page',
     baseUrl: env.ADKA_BASE_URL || '',
@@ -25,6 +26,8 @@ export let paths = {
     distStatic: '',
     src: '',
     srcPages: '',
+    srcAssets: '',
+    distAssets: '',
 };
 initPaths();
 
@@ -35,9 +38,12 @@ export function setConfig(newConfig = {}) {
 
 function initPaths() {
     const src = join(ROOT_FOLDER, config.srcFolder);
+    const distStatic = join(ROOT_FOLDER, config.distStatic);
     paths = {
         src,
-        distStatic: join(ROOT_FOLDER, config.distStatic),
+        distStatic,
         srcPages: join(src, config.pagesFolder),
+        srcAssets: join(src, config.assetsFolder),
+        distAssets: join(distStatic, config.assetsFolder),
     };
 }

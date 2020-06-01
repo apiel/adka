@@ -408,7 +408,7 @@ export async function Hello() {
 
 > **Note**: now our component is asynchrone.
 
-## Asset
+## Assets
 
 TBD. (WIP)
 
