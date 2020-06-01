@@ -1,5 +1,6 @@
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 import { Item } from './Item.tsx';
+import Product from './Product.tsx';
 
 const items = new Map<string, any>();
 items.set('a', {
@@ -23,9 +24,20 @@ router
             context.response.type = 'text/html';
             context.response.body = content;
         }
+    })
+    .get('/product/:id', async (context: any) => {
+        if (context?.params?.id && items.has(context.params.id)) {
+            const item = items.get(context.params.id);
+            const content = await Product(item).render();
+            context.response.type = 'text/html';
+            context.response.body = content;
+        }
     });
 
 const app = new Application();
+app.addEventListener('error', (evt) => {
+    console.log(evt.error);
+});
 app.use(router.routes());
 app.use(router.allowedMethods());
 
