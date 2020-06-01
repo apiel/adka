@@ -1,0 +1,17 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 4 * * *"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: denolib/setup-deno@master
+      - run: deno run -c tsconfig.json --allow-read --allow-write --allow-env --unstable adka.ts
+      - run: diff -r site .snapshot
