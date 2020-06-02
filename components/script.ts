@@ -1,5 +1,6 @@
 import { jsxHtml } from '../deps.ts';
 import { getSrc } from './utils/getSrc.ts';
+import { addDeps } from '../watcher.ts';
 const { ElementNode } = jsxHtml;
 
 export async function script(src: string) {
@@ -9,5 +10,6 @@ export async function script(src: string) {
         return null;
     }
     const [, emit] = await Deno.bundle(file);
+    addDeps(`file://${file}`);
     return new ElementNode('script', { innerHTML: emit }, []);
 }

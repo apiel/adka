@@ -7,6 +7,7 @@ import { getRoutePath } from './getRoutePath.ts';
 import { config, paths } from '../config.ts';
 import { saveComponentToHtml } from './saveComponentToHtml.ts';
 import { generateDynamicPage } from './generateDynamicPage.ts';
+import { buildToTree } from '../watcher.ts';
 
 export interface PagePath {
     file: string;
@@ -50,4 +51,5 @@ export async function generatePage(pagePath: PagePath, pagePaths: PagePaths) {
     } else {
         await saveComponentToHtml(pagePath, pagePaths, htmlPath);
     }
+    buildToTree(file);
 }

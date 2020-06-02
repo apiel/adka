@@ -2,6 +2,7 @@ import { readFileStrSync, readFileStr } from 'https://deno.land/std/fs/read_file
 
 import { jsxHtml } from '../deps.ts';
 import { getSrc } from './utils/getSrc.ts';
+import { addDeps } from '../watcher.ts';
 const { ElementNode } = jsxHtml;
 
 export type CssVar = {[key: string]: string};
@@ -16,7 +17,7 @@ export async function css(src: string, options?: CssOptions) {
         return null;
     }
     const content = await readFileStr(file);
-    return cssRender(content, options);
+    return cssRender(file, content, options);
 }
 
 export function cssSync(src: string, options?: CssOptions) {
@@ -26,10 +27,11 @@ export function cssSync(src: string, options?: CssOptions) {
         return null;
     }
     const content = readFileStrSync(file);
-    return cssRender(content, options);
+    return cssRender(file, content, options);
 }
 
-function cssRender(content: string, options?: CssOptions) {
+function cssRender(file: string, content: string, options?: CssOptions) {
+    addDeps(`file://${file}`);
     return new ElementNode('style', {}, [getVariables(options), content]);
 }
 

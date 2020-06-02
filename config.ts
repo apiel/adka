@@ -8,6 +8,13 @@ if (existsSync(`${Deno.cwd()}/.env`)) {
     dotenv({ export: true });
 }
 
+if (Deno.args.includes('dev')) {
+    Deno.env.set('ADKA_DEV', 'true');
+}
+if (Deno.args.includes('watch')) {
+    Deno.env.set('ADKA_WATCH', 'true');
+}
+
 const env = Deno.env.toObject();
 export const ROOT_FOLDER = env.ADKA_ROOT_FOLDER
     ? resolve(env.ADKA_ROOT_FOLDER)
@@ -15,6 +22,7 @@ export const ROOT_FOLDER = env.ADKA_ROOT_FOLDER
 
 log('ROOT_FOLDER', ROOT_FOLDER);
 
+const watch = env.ADKA_WATCH === 'true';
 export let config = {
     srcFolder: env.ADKA_SRC_FOLDER || 'src',
     distStatic: env.ADKA_DIST_FOLDER || 'site',
@@ -24,6 +32,8 @@ export let config = {
     pagesSuffix: env.ADKA_PAGES_SUFFIX || '.page',
     baseUrl: env.ADKA_BASE_URL || '',
     startScript: env.ADKA_START_SCRIPT || 'start.ts',
+    dev: watch || env.ADKA_DEV === 'true',
+    watch,
 };
 
 export let paths = {
