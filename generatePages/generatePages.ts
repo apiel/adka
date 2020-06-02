@@ -27,7 +27,8 @@ export async function generatePages() {
 }
 
 export async function generatePage(file: string) {
-    const { default: page } = await import(`file://${file}`);
+    // need to clear cache
+    const { default: page } = await import(`file://${file}?${+new Date()}.tsx`);
     const htmlPath = join(paths.distStatic, getRoutePath(file));
     log('Load page component', file);
     if (page.getPropsList) {

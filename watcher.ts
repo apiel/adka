@@ -1,4 +1,5 @@
 import { config } from './config.ts';
+import { generatePage } from './generatePages/generatePages.ts';
 
 const CONSUME_INTERVAL = 250;
 
@@ -70,6 +71,6 @@ async function consumeEvents() {
     });
 
     for (const file of genFiles) {
-        console.log('file to gen', file);
+        await generatePage(file);
     }
 }
