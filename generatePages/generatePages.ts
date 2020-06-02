@@ -13,10 +13,8 @@ export interface PagePath {
     file: string;
     page: Page;
 }
-export type PagePaths = { [pathId: string]: PagePath };
 
 export async function generatePages() {
-    const pagePaths: PagePaths = {};
     for await (const entry of walk(paths.srcPages, {
         match: [
             globToRegExp(
@@ -24,32 +22,18 @@ export async function generatePages() {
             ),
         ],
     })) {
-        const file = entry.path;
-        const { default: page } = await import(`file://${file}`);
-        pagePaths[page.linkId] = {
-            file,
-            page,
-        };
-    }
-
-    for (const pagePath of Object.values(pagePaths)) {
-        await generatePage(pagePath, pagePaths);
+        await generatePage(entry.path);
     }
 }
 
-export async function generatePage(pagePath: PagePath, pagePaths: PagePaths) {
-    const { file, page } = pagePath;
+export async function generatePage(file: string) {
+    const { default: page } = await import(`file://${file}`);
     const htmlPath = join(paths.distStatic, getRoutePath(file));
     log('Load page component', file);
     if (page.getPropsList) {
-        await generateDynamicPage(
-            pagePath,
-            pagePaths,
-            htmlPath,
-            page.getPropsList,
-        );
+        await generateDynamicPage(page, htmlPath, page.getPropsList);
     } else {
-        await saveComponentToHtml(pagePath, pagePaths, htmlPath);
+        await saveComponentToHtml(page, htmlPath);
     }
     buildTree(file);
 }

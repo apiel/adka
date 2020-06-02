@@ -24,6 +24,7 @@ async function Home() {
             <ul>
                 <li><a href={Item.link({ id: 3 })}>link 3</a></li>
                 <li><a href={Item.link({ id: 2 })}>link 2</a></li>
+                <li><a href="/item/1">link manual</a></li>
             </ul>
             <p>
                 <img src={asset('/radka.jpg')} alt="" />

@@ -1,5 +1,7 @@
 import { config, paths } from './config.ts';
-import { jsxHtml, caller } from './deps.ts';
+import { jsxHtml, caller, urlJoin } from './deps.ts';
+import { getRoutePath } from './generatePages/getRoutePath.ts';
+import { applyPropsToPath } from './generatePages/applyPropsToPath.ts';
 
 export { asset } from './components/utils/asset.ts';
 export { css, cssSync } from './components/css.ts';
@@ -18,8 +20,6 @@ export interface Start {
     config: typeof config;
     paths: typeof paths;
 }
-
-let linkIdSeq = 0;
 
 export type LinkProps = {
     [key: string]: string | number;
@@ -41,26 +41,30 @@ export type GetPropsList = () => GetterPropsList | Promise<GetterPropsList>;
 export interface Page {
     getPropsList: GetPropsList | undefined;
     component: Function;
-    linkId: string;
+    file: string;
+    url: string;
     link: (props?: LinkProps) => string;
 }
 
 export function page(
     component: Function,
     propsList?: GetPropsList | PropsList,
-    linkId = `page-${linkIdSeq++}`,
 ): Page {
-    const file = caller.default();
+    let file = caller.default()!;
+    if (file.startsWith('file://')) {
+        file = file.substr(7);
+    }
+    const url =
+        config.baseUrl +
+            getRoutePath(file, urlJoin).replace(/\/index.html$/g, '') || '/';
     return {
         getPropsList: Array.isArray(propsList)
             ? () => ({ propsList })
             : propsList,
         component,
-        linkId,
-        link: (props?: LinkProps) => {
-            // console.log(file, `%link%${linkId}%${serialize(props)}%`,);
-            return `%link%${linkId}%${serialize(props)}%`;
-        },
+        file,
+        url,
+        link: (props?: LinkProps) => applyPropsToPath(url, props),
     };
 }
 

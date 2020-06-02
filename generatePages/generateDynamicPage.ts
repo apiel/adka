@@ -1,11 +1,9 @@
 import { saveComponentToHtml } from './saveComponentToHtml.ts';
 import { applyPropsToPath } from './applyPropsToPath.ts';
-import { PagePath, PagePaths } from './generatePages.ts';
-import { GetPropsList } from '../mod.ts';
+import { GetPropsList, Page } from '../mod.ts';
 
 export async function generateDynamicPage(
-    pagePath: PagePath,
-    pagePaths: PagePaths,
+    page: Page,
     htmlPath: string,
     getPropsList: GetPropsList,
 ) {
@@ -13,14 +11,13 @@ export async function generateDynamicPage(
     if (propsList) {
         for (const props of propsList) {
             await saveComponentToHtml(
-                pagePath,
-                pagePaths,
+                page,
                 applyPropsToPath(htmlPath, props),
                 props,
             );
         }
     }
     if (next) {
-        await generateDynamicPage(pagePath, pagePaths, htmlPath, next);
+        await generateDynamicPage(page, htmlPath, next);
     }
 }
