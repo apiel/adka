@@ -10,6 +10,6 @@ export async function script(src: string) {
         return null;
     }
     const [, emit] = await Deno.bundle(file);
-    addDeps(`file://${file}`);
+    addDeps(file);
     return new ElementNode('script', { innerHTML: emit }, []);
 }

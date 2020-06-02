@@ -31,6 +31,7 @@ function applyPropsToLinks(source: string, links: PagePaths) {
                 const p = prop.split('=');
                 props[p[0]] = p[1];
             });
+            // console.log('links[linkId].file', links[linkId].file);
             return (
                 config.baseUrl +
                 applyPropsToPath(

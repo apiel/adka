@@ -1,5 +1,5 @@
 import { config, paths } from './config.ts';
-import { jsxHtml } from './deps.ts';
+import { jsxHtml, caller } from './deps.ts';
 
 export { asset } from './components/utils/asset.ts';
 export { css, cssSync } from './components/css.ts';
@@ -50,13 +50,17 @@ export function page(
     propsList?: GetPropsList | PropsList,
     linkId = `page-${linkIdSeq++}`,
 ): Page {
+    const file = caller.default();
     return {
         getPropsList: Array.isArray(propsList)
             ? () => ({ propsList })
             : propsList,
         component,
         linkId,
-        link: (props?: LinkProps) => `%link%${linkId}%${serialize(props)}%`,
+        link: (props?: LinkProps) => {
+            // console.log(file, `%link%${linkId}%${serialize(props)}%`,);
+            return `%link%${linkId}%${serialize(props)}%`;
+        },
     };
 }
 

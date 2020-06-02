@@ -15,4 +15,4 @@ export {
     error,
 } from 'https://raw.githubusercontent.com/apiel/logol/master/mod.ts';
 
-export * as caller from 'https://raw.githubusercontent.com/apiel/caller/master/caller.ts';
+export * as caller from 'https://raw.githubusercontent.com/apiel/caller/0.1.1/caller.ts';

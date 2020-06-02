@@ -31,7 +31,7 @@ export function cssSync(src: string, options?: CssOptions) {
 }
 
 function cssRender(file: string, content: string, options?: CssOptions) {
-    addDeps(`file://${file}`);
+    addDeps(file);
     return new ElementNode('style', {}, [getVariables(options), content]);
 }
 
