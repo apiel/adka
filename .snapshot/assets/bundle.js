@@ -1,13 +1,4 @@
-<section><style>:root {
---color: green;
-}
-h1 {
-    color: var(--color);
-}</style><h1>Homepage</h1><p>Hello world abc 123</p><input type="text" placeholder="email" /><input type="password" placeholder="password" /><style>
-                #login-btn {
-                    border-color: blue;
-                }
-            </style><button id="login-btn" style="color: red">Log In</button><ul><li><a href="&#x2F;&#x2F;item&#x2F;3">link 3</a></li><li><a href="&#x2F;&#x2F;item&#x2F;2">link 2</a></li><li><a href="&#x2F;item&#x2F;1">link manual</a></li></ul><p><img src="&#x2F;assets&#x2F;radka.jpg" alt /></p><script>// Copyright 2018-2020 the Deno authors. All rights reserved. MIT license.
+// Copyright 2018-2020 the Deno authors. All rights reserved. MIT license.
 
 // This is a specialised implementation of a System module loader.
 
@@ -117,7 +108,6 @@ let System, __instantiateAsync, __instantiate;
 })();
 
 "use strict";
-console.log('Inline script index.script.ts');
+console.log('Hello, I am the main bundle.');
 
-__instantiate("index.script");
-</script><script type="module">import '/assets/bundle.js'</script></section>
+__instantiate("main");
