@@ -22,15 +22,22 @@ async function Home() {
                 Log In
             </button>
             <ul>
-                <li><a href={Item.link({ id: 3 })}>link 3</a></li>
-                <li><a href={Item.link({ id: 2 })}>link 2</a></li>
-                <li><a href="/item/1">link manual</a></li>
+                <li>
+                    <a href={Item.link({ id: 3 })}>link 3</a>
+                </li>
+                <li>
+                    <a href={Item.link({ id: 2 })}>link 2</a>
+                </li>
+                <li>
+                    <a href="/item/1">link manual</a>
+                </li>
             </ul>
             <p>
                 <img src={asset('/radka.jpg')} alt="" />
             </p>
 
             {await script('./index.script.ts')}
+            <script type="module" innerHTML={`import '${asset('/bundle.js')}'`}></script>
         </section>
     );
 }

@@ -30,7 +30,7 @@ export let config = {
     bundlesFolder: env.ADKA_BUNDLES_FOLDER || 'bundles',
     pagesFolder: env.ADKA_PAGES_FOLDER || 'pages',
     pagesSuffix: env.ADKA_PAGES_SUFFIX || '.page',
-    baseUrl: env.ADKA_BASE_URL || '',
+    baseUrl: env.ADKA_BASE_URL || '/',
     startScript: env.ADKA_START_SCRIPT || 'start.ts',
     dev: watch || env.ADKA_DEV === 'true',
     watch,

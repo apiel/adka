@@ -370,9 +370,11 @@ import {
 export function Hello() {
     return (
         <Fragment>
-            <script>{`
+            <script
+                innerHTML={`
                 console.log('hello world');
-            `}</script>
+            `}
+            ></script>
             <p>Hello</p>
             <p class="bold">Line 2.</p>
         </Fragment>
@@ -437,7 +439,7 @@ export function Hello() {
 
 ## Startup script
 
-Before to start generating the pages, it might be necessary to setup a working environment, either to bundle some SCSS file or some TS file for the assets, or to initiate a connection to a database. To do this, you can use the startup script: `src/start.ts`. This file is executed just after cleaning up the destination folder and before pages get generated.
+Before to start generating the pages, it might be necessary to setup a working environment, either to bundle some SCSS file or some TS file for the assets, or to initiate a connection to a database. To do this, you can use the startup script: `src/start.ts`.
 
 If your startup script return a default function, this one will be executed asynchrounsly and wait the end of the function before to start generating the pages:
 
@@ -466,10 +468,13 @@ console.log('Hello, I am the main bundle.');
 import { Start } from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
 import { join } from 'https://deno.land/std/path/mod.ts';
 import { writeFileStr } from 'https://deno.land/std/fs/write_file_str.ts';
+import { ensureFile } from 'https://deno.land/std/fs/ensure_file.ts';
 
 export default async function ({ paths }: Start) {
     const [, emit] = await Deno.bundle(join(paths.srcBundles, 'main.ts'));
-    await writeFileStr(join(paths.distAssets, 'bundle.js'), emit);
+    const dest = join(paths.distAssets, 'bundle.js');
+    await ensureFile(dest);
+    await writeFileStr(dest, emit);
 }
 ```
 
@@ -487,9 +492,10 @@ export function Layout({ children }) {
             <head></head>
             <body>
                 {children}
-                <script type="module">{`
-                    import '${asset('/bundle.js')}'
-                `}</script>
+                <script
+                    type="module"
+                    innerHTML={`import '${asset('/bundle.js')}'`}
+                ></script>
             </body>
         </html>
     );
