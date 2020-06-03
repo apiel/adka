@@ -122,7 +122,7 @@ function Pet({ type, description }: Props) {
 ...
 ```
 
-Each page returns a link function, providing the url to access the page. So if the page changes its path, the route will be automatically updated.
+Each page returns a link function, providing the url to access the page. So if the page changes of path, the route will be automatically updated.
 
 For pages with dynamic content, you can pass the props with in the link `Pet.link({type: 'dog'})`.
 
@@ -275,7 +275,7 @@ export function Hello() {
 }
 ```
 
-You can as well, use a CSS file as inline style:
+You can as well embed a CSS file:
 
 ```css
 /* hello.css */
@@ -380,7 +380,7 @@ export function Hello() {
 }
 ```
 
-As the previous method is a bit tidious, you can as well embed an external `ts` file. The generator will bundle the file and inject it in the component as inline JavaScript. To bundle the TypeScript file, we use [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle), right now this deno feature is still work in progress, so you will have to use the parameter `--unstable` when executing Adka.
+As the previous method is a bit tidious, you can as well embed an external `ts` file. The generator will bundle the file and inject it in the component as inline JavaScript. To bundle the TypeScript file, we use [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle), right now this deno feature is still unstable, so you will have to use the parameter `--unstable` when executing Adka.
 
 Now, let's create our script `src/components/hello.script.ts`:
 
