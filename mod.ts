@@ -50,10 +50,7 @@ export function page(
     component: Function,
     propsList?: GetPropsList | PropsList,
 ): Page {
-    let file = caller.default()!;
-    if (file.startsWith('file://')) {
-        file = file.substr(7);
-    }
+    const file = caller.default()!;
     const url =
         config.baseUrl +
             getRoutePath(file, urlJoin).replace(/\/index.html$/g, '') || '/';

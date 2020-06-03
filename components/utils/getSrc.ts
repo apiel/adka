@@ -6,9 +6,7 @@ export function getSrc(src: string) {
         // !! caller must stay in this function
         const parentFile = caller.default(caller.up + 1);
         if (parentFile) {
-            src = join(dirname(parentFile), src)
-                .replace('file:///', '/')
-                .replace('file:/', '/');
+            src = join(dirname(parentFile), src);
         } else {
             return;
         }

@@ -1,6 +1,5 @@
 import { config } from './config.ts';
 import { generatePage } from './generatePages/generatePages.ts';
-import { removeCacheSuffix } from './generatePages/getRoutePath.ts';
 
 const CONSUME_INTERVAL = 250;
 
@@ -16,16 +15,12 @@ let timer: number;
 
 export function addDeps(file?: string) {
     if (file && config.watch) {
-        if (file.startsWith('file://')) {
-            file = file.substr(7);
-        }
         fileDeps.add(file);
     }
 }
 
 export function buildTree(parent: string) {
     [...fileDeps].forEach((child) => {
-        child = removeCacheSuffix(child);
         if (!tree[child]) {
             tree[child] = new Set([parent]);
         } else {

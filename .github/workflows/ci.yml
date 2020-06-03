@@ -17,4 +17,4 @@ jobs:
           deno-version: v1.0.3
       - run: deno --version
       - run: deno run -c tsconfig.json --allow-read --allow-write --allow-env --allow-net --unstable adka.ts
-      - run: diff -r site .snapshot
+      - run: ./test.sh
