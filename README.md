@@ -496,6 +496,16 @@ export function Layout({ children }) {
 }
 ```
 
+## Dev > Watch mode
+
+During development, it is more convenient to re-generate the site as soon as a file changes. Instead to generate all the pages again, Adka will only generate the necessary ones. So if a page change, only this page will be generated, if a child component change, only the pages using this component will be generated. To use the watch mode run Adka like this:
+
+```sh
+adka watch
+# or (if adka is not installed)
+deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts watch
+```
+
 ## Folder and file structure
 
 -   pages are in `src/pages`
