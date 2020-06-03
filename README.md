@@ -1,12 +1,12 @@
-# adka
+# Adka
 
 Adka is a static site generator using JSX without React.
 
 CSS and VanillaJs become more and more powerful providing a lot of features, slowly the complexity of tools like React and Angular become questionable. Static html pages are as well coming back to trend, with some frameworks like Gatsby or NextJs, mainly to improve SEO and performance. Unfortunately those frameworks are heavily dependent on React. Is React really meant to generate HTML on the server? Why would we have to deal with `useState`, `useEffect` and all those things for state management on the server? Of course, some part of the React logic is also used in the browser, for the dynamic part of the UI but all this logic can easily be done in CSS and VanillaJs, especially since WebComponent is available.
 
-## Install adka
+Even if Adka is first intended to do SSG, you can use it as well for [server side rendering](https://github.com/apiel/adka#server-side-rendering).
 
-> **Note:** install is not mendatory to use adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts`
+## Install Adka
 
 Use deno installer: https://deno.land/manual/tools/script_installer
 
@@ -19,6 +19,8 @@ On linux you might need to specify the deno bin path:
 ```sh
 echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.bashrc
 ```
+
+> **Note:** install is not mendatory to use Adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts`
 
 ## Getting started
 
@@ -54,7 +56,7 @@ deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubus
 
 This will create a new `site` folder containing the generated html file `/index.html`.
 
-> In case you get the error "JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.", see troubleshooting in the bottom of the README.
+> In case you get the error "JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.", see [troubleshooting](https://github.com/apiel/adka#troubleshooting).
 
 ### Dynamic pages
 
@@ -378,7 +380,7 @@ export function Hello() {
 }
 ```
 
-As the previous method is a bit tidious, you can as well embed an external `ts` file. The generator will bundle the file and inject it in the component as inline JavaScript. To bundle the TypeScript file, we use [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle), right now this deno feature is still work in progress, so you will have to use the parameter `--unstable` when executing adka.
+As the previous method is a bit tidious, you can as well embed an external `ts` file. The generator will bundle the file and inject it in the component as inline JavaScript. To bundle the TypeScript file, we use [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle), right now this deno feature is still work in progress, so you will have to use the parameter `--unstable` when executing Adka.
 
 Now, let's create our script `src/components/hello.script.ts`:
 
@@ -452,7 +454,7 @@ export default async function () {
 
 ### JavaScript bundle
 
-Generating bundle is right now not part of adka generator since the [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle) API is still unstable. But you can generate the bundle from the startup script:
+Generating bundle is right now not part of Adka generator since the [Deno.bundle](https://deno.land/manual/runtime/compiler_apis#denobundle) API is still unstable. But you can generate the bundle from the startup script:
 
 ```ts
 // src/bundles/main.ts
@@ -506,7 +508,7 @@ export function Layout({ children }) {
 
 ## Server side rendering
 
-Adka is first intended to do SSG, but you can use it as well for server side rendering.
+Adka is first intended to do static site generation, but you can use it as well for SSR.
 Following is an example:
 
 ```ts
