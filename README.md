@@ -469,7 +469,7 @@ import { writeFileStr } from 'https://deno.land/std/fs/write_file_str.ts';
 
 export default async function ({ paths }: Start) {
     const [, emit] = await Deno.bundle(join(paths.srcBundles, 'main.ts'));
-    await writeFileStr(join(paths.distAssets, 'bundle.js'));
+    await writeFileStr(join(paths.distAssets, 'bundle.js'), emit);
 }
 ```
 
