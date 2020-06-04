@@ -4,6 +4,8 @@ deno run -c tsconfig.json --allow-read --allow-write --allow-env --reload https:
 
 ## ToDo
 
-- adka serve ?
+- to refresh import cache, use checksum of file instead of time
+- first reloadPage doesnt work properly
+- write test
 
 - turbolinks?

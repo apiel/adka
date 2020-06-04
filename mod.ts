@@ -51,9 +51,10 @@ export function page(
     propsList?: GetPropsList | PropsList,
 ): Page {
     const file = caller.default()!;
-    const url =
-        config.baseUrl +
-            getRoutePath(file, urlJoin).replace(/\/index.html$/g, '') || '/';
+    const url = urlJoin(
+        config.baseUrl,
+        getRoutePath(file, urlJoin).replace(/\/index.html$/g, '') || '/',
+    );
     return {
         getPropsList: Array.isArray(propsList)
             ? () => ({ propsList })
@@ -63,16 +64,4 @@ export function page(
         url,
         link: (props?: LinkProps) => applyPropsToPath(url, props),
     };
-}
-
-function serialize(props?: LinkProps) {
-    if (props) {
-        // ToDo: should we remove % from value
-        // we would anyway need a central place to generate url values
-        // for the applyPropsToHtmlPath in compile.ts
-        return Object.keys(props)
-            .map((k) => `${k}=${props[k]}`)
-            .join(';');
-    }
-    return '';
 }
