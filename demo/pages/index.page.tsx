@@ -9,7 +9,7 @@ async function Home() {
     return (
         <section>
             {await css('./index.css', { var: { color } })}
-            <h1>Homepage</h1>
+            <h1>Homepage yo</h1>
             <Hello name="abc" num={{ count: 123 }} />
             <input type="text" placeholder="email" />
             <input type="password" placeholder="password" />
