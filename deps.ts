@@ -23,4 +23,4 @@ const caller = {
 };
 export { caller };
 
-export * as server from 'https://raw.githubusercontent.com/apiel/adka_server/0.1.1/mod.ts';
+export * as server from 'https://raw.githubusercontent.com/apiel/adka_server/0.1.2/mod.ts';

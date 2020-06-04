@@ -7,7 +7,7 @@ export async function serve() {
         const options = {
             port: config.port,
             root: config.distStatic,
-            watcher: async () => {}, // to be null when update to 0.1.2
+            watcher: null,
         };
         await server.server(options);
     }
