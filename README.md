@@ -22,7 +22,7 @@ echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.bashrc
 
 > **Note:** install is not mendatory to use Adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts`
 
-> **Note:** use deno **1.0.3**, right now adka is broken with **1.0.4**, see issue https://github.com/denoland/deno/issues/6071 should be solved in 1.0.5.
+> **Note:** use deno at least **1.0.5**
 
 ## Getting started
 

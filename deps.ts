@@ -22,3 +22,5 @@ const caller = {
     default: callerOrigin.default.bind({ cb: cleanFilename }),
 };
 export { caller };
+
+export * as server from 'https://raw.githubusercontent.com/apiel/adka_server/0.1.0/mod.ts';

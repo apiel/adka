@@ -4,8 +4,9 @@ import { copy, exists } from 'https://deno.land/std/fs/mod.ts';
 
 import { generatePages } from './generatePages/generatePages.ts';
 import { config, paths } from './config.ts';
-import { info } from './deps.ts';
+import { info, server } from './deps.ts';
 import { watch } from './watcher.ts';
+import { serve } from './server.ts';
 
 export async function adka() {
     info('Run adka');
@@ -22,7 +23,8 @@ export async function adka() {
         }
     }
     await generatePages();
-    await watch();
+    watch();
+    serve();
 }
 
 if (import.meta.main) {
