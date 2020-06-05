@@ -1,0 +1,1 @@
+console.log('Inline script index.script.ts');

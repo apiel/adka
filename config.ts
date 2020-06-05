@@ -72,3 +72,14 @@ function initPaths() {
         srcBundles: join(src, config.bundlesFolder),
     };
 }
+
+export let tmpFolder = '';
+
+export function setTmpFolder() {
+    tmpFolder = join(Deno.dir('tmp')!, `adka-${+new Date()}`);
+}
+
+export function rmTmpFolder() {
+    // to implement
+    // tmpFolder = undefined;
+}

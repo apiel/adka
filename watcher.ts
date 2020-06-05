@@ -1,5 +1,9 @@
-import { config } from './config.ts';
+import { join } from 'https://deno.land/std/path/mod.ts';
+import { copy } from 'https://deno.land/std/fs/mod.ts';
+
+import { config, paths, setTmpFolder, tmpFolder } from './config.ts';
 import { generatePage } from './generatePages/generatePages.ts';
+import { info } from './deps.ts';
 
 const CONSUME_INTERVAL = 250;
 
@@ -32,7 +36,8 @@ export function buildTree(parent: string) {
 
 export async function watch() {
     if (config.watch) {
-        const watcher = Deno.watchFs(config.srcFolder, { recursive: true });
+        info('Watch for file change in', paths.src);
+        const watcher = Deno.watchFs(paths.src, { recursive: true });
         for await (const event of watcher) {
             clearTimeout(timer);
             events.push({ ...event });
@@ -67,7 +72,23 @@ async function consumeEvents() {
         }
     });
 
+    // use the following when Deno will support to dynamic import without cache
+    // for (const file of genFiles) {
+    //     await generatePage(file);
+    // }
+
+    // Because Deno doesn't allow us to clear the cache on dynamic import
+    // We have to copy the files in a different folder to trick Deno
+
+    // we should only copy the file necessary using the tree
+    // cause assets folder can be huge
+    setTmpFolder();
+    // we should remove root folder
+    await copy(paths.src, join(tmpFolder, paths.src));
+
     for (const file of genFiles) {
-        await generatePage(file);
+        await generatePage(join(tmpFolder, file));
     }
+
+    // then we should delete the tmpFolder
 }

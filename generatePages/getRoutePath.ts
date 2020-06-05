@@ -5,7 +5,7 @@ import {
     dirname,
 } from 'https://deno.land/std/path/mod.ts';
 
-import { config, paths } from '../config.ts';
+import { config, paths, tmpFolder } from '../config.ts';
 
 export function getRoutePath(file: string, glue = join) {
     const filename = basename(file, `${config.pagesSuffix}${extname(file)}`);
@@ -13,7 +13,7 @@ export function getRoutePath(file: string, glue = join) {
         dirname(file),
         filename === 'index' ? '' : filename,
         'index.html',
-    ).substr(paths.srcPages.length);
+    ).substr(tmpFolder.length + paths.srcPages.length);
 
     return path;
 }

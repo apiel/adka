@@ -28,8 +28,10 @@ export async function generatePages() {
 }
 
 export async function generatePage(file: string) {
-    // need to clear cache
-    const { default: page } = await import(`file://${file}?${+new Date()}.tsx`);
+    // remove ?stuf in file cleaner
+    const noCacheFile = `file://${file}?${+new Date()}${Math.random()}.tsx`;
+    console.log('noCacheFile', noCacheFile);
+    const { default: page } = await import(noCacheFile);
     const htmlPath = join(paths.distStatic, getRoutePath(file));
     log('Load page component', file);
     if (page.getPropsList) {

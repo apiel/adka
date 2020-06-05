@@ -615,6 +615,19 @@ In case you get the following error:
 
 > JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
 
+To fix this include in the top of the jsx file the refrence to `jsx.d.ts`:
+
+```tsx
+/// <reference path="https://raw.githubusercontent.com/apiel/adka/master/jsx.d.ts" />
+import { React } from 'https://raw.githubusercontent.com/apiel/adka/master/mod.ts';
+
+export function Hello() {
+    return <p>Hello.</p>;
+}
+```
+
+Or
+
 Create the following file `src/jsx.d.ts`:
 
 ```ts
