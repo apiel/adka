@@ -1,17 +1,15 @@
-/// <reference path="../../jsx.d.ts" />
+/// <reference path="../jsx.d.ts" />
 
-import { jsx, page, css, script, asset } from '../../mod.ts';
+import { jsx, page, css, script, asset } from '../deps.ts';
 import { Hello } from '../components/Hello.tsx';
 import Item from './item/[id].page.tsx';
-
-console.log('load nb 3');
 
 async function Home() {
     const color = 'green';
     return (
         <section>
             {await css('./index.css', { var: { color } })}
-            <h1>Homepage 3</h1>
+            <h1>Homepage</h1>
             <Hello name="abc" num={{ count: 123 }} />
             <input type="text" placeholder="email" />
             <input type="password" placeholder="password" />
@@ -39,7 +37,10 @@ async function Home() {
             </p>
 
             {await script('./index.script.ts')}
-            <script type="module" innerHTML={`import '${asset('/bundle.js')}'`}></script>
+            <script
+                type="module"
+                innerHTML={`import '${asset('/bundle.js')}'`}
+            ></script>
         </section>
     );
 }

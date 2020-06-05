@@ -1,6 +1,6 @@
-/// <reference path="../../../../jsx.d.ts" />
+/// <reference path="../../../jsx.d.ts" />
 
-import { jsx, page } from '../../../../mod.ts';
+import { jsx, page } from '../../../deps.ts';
 
 interface Props {
     id: string;

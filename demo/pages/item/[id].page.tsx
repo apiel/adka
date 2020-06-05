@@ -1,4 +1,4 @@
-import { jsx, page } from '../../../mod.ts';
+import { jsx, page } from '../../deps.ts';
 import Home from '../index.page.tsx';
 import { Hello } from '../../components/Hello.tsx';
 

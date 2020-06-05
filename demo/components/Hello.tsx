@@ -1,4 +1,4 @@
-import { jsx, Fragment } from '../../mod.ts';
+import { jsx, Fragment } from '../deps.ts';
 
 interface Props {
     name: string;
@@ -9,7 +9,7 @@ export function Hello({ name, num }: Props) {
     return (
         <Fragment>
             <p>
-                Hello world {name} {num.count}
+                Hello {name} {num.count}
             </p>
         </Fragment>
     );
