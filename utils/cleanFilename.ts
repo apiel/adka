@@ -1,5 +1,5 @@
 export function cleanFilename(file: string) {
-    file = removeCacheSuffix(file);
+    // file = removeCacheSuffix(file);
     return removeCachePrefix(file);
 }
 

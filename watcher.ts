@@ -78,7 +78,7 @@ async function consumeEvents() {
         }
     });
 
-    // use the following when Deno will support to dynamic import without cache
+    // // use the following when Deno will support to dynamic import without cache
     // for (const file of genFiles) {
     //     await generatePage(file);
     // }
@@ -86,6 +86,7 @@ async function consumeEvents() {
     // Because Deno doesn't allow us to clear the cache on dynamic import
     // We have to copy the files in a different folder to trick Deno
     setTmpFolder();
+    // ToDo:
     // we should only copy the file necessary using the tree
     // cause assets folder can be huge
     await copy(paths.src, tmpJoin(paths.src));
