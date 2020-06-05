@@ -79,7 +79,7 @@ export function setTmpFolder() {
     tmpFolder = join(Deno.dir('tmp')!, `adka-${+new Date()}`);
 }
 
-export function rmTmpFolder() {
-    // to implement
-    // tmpFolder = undefined;
+export async function rmTmpFolder() {
+    await Deno.remove(tmpFolder, { recursive: true });
+    tmpFolder = '';
 }

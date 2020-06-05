@@ -1,7 +1,13 @@
 import { join } from 'https://deno.land/std/path/mod.ts';
 import { copy } from 'https://deno.land/std/fs/mod.ts';
 
-import { config, paths, setTmpFolder, tmpFolder } from './config.ts';
+import {
+    config,
+    paths,
+    setTmpFolder,
+    tmpFolder,
+    rmTmpFolder,
+} from './config.ts';
 import { generatePage } from './generatePages/generatePages.ts';
 import { info } from './deps.ts';
 
@@ -79,16 +85,28 @@ async function consumeEvents() {
 
     // Because Deno doesn't allow us to clear the cache on dynamic import
     // We have to copy the files in a different folder to trick Deno
-
+    setTmpFolder();
     // we should only copy the file necessary using the tree
     // cause assets folder can be huge
-    setTmpFolder();
-    // we should remove root folder
-    await copy(paths.src, join(tmpFolder, paths.src));
+    await copy(paths.src, tmpJoin(paths.src));
 
     for (const file of genFiles) {
-        await generatePage(join(tmpFolder, file));
+        await generatePage(tmpJoin(file));
     }
+    await rmTmpFolder();
+}
 
-    // then we should delete the tmpFolder
+function tmpJoin(path: string) {
+    return fixWin(join(tmpFolder, path));
+}
+
+// ToDo: test
+function fixWin(path: string) {
+    // on windows C:\ we cant create a folder C:\tmp\adka-1234\C:\path\src...
+    // so we change the ':' to 'h' and we get C:\tmp\adka-1234\Ch\path\src...
+    return (
+        path.substr(0, tmpFolder.length + 1) +
+        'h' +
+        path.substr(tmpFolder.length + 2)
+    );
 }

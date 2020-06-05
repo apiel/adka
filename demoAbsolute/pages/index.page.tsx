@@ -4,14 +4,12 @@ import { jsx, page, css, script, asset } from '/home/alex/dev/deno/pkg/adka/mod.
 import { Hello } from '../components/Hello.tsx';
 import Item from './item/[id].page.tsx';
 
-console.log('load nb 5');
-
 async function Home() {
     const color = 'green';
     return (
         <section>
             {await css('./index.css', { var: { color } })}
-            <h1>Homepage 5</h1>
+            <h1>Homepage</h1>
             <Hello name="abc" num={{ count: 123 }} />
             <input type="text" placeholder="email" />
             <input type="password" placeholder="password" />
