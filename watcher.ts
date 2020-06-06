@@ -1,5 +1,5 @@
 import { join } from 'https://deno.land/std/path/mod.ts';
-import { copy } from 'https://deno.land/std/fs/mod.ts';
+import { copy, ensureFile, walk } from 'https://deno.land/std/fs/mod.ts';
 
 import {
     config,
@@ -9,7 +9,7 @@ import {
     rmTmpFolder,
 } from './config.ts';
 import { generatePage } from './generatePages/generatePages.ts';
-import { info } from './deps.ts';
+import { info, log } from './deps.ts';
 
 const CONSUME_INTERVAL = 250;
 
@@ -85,16 +85,29 @@ async function consumeEvents() {
 
     // Because Deno doesn't allow us to clear the cache on dynamic import
     // We have to copy the files in a different folder to trick Deno
-    setTmpFolder();
-    // ToDo:
-    // we should only copy the file necessary using the tree
-    // cause assets folder can be huge
-    await copy(paths.src, tmpJoin(paths.src));
-
+    await tmpCpy();
     for (const file of genFiles) {
         await generatePage(tmpJoin(file));
     }
     await rmTmpFolder();
+}
+
+async function tmpCpy() {
+    log('Clear cache');
+    setTmpFolder();
+    // Because some file can be big, e.g. some images
+    // we omit all the big files (5mb?)
+    // await copy(paths.src, tmpJoin(paths.src));
+    for await (const entry of walk(paths.src, { includeDirs: false })) {
+        const tmpFile = tmpJoin(entry.path);
+        const { size } = await Deno.lstat(entry.path);
+        if (size < config.clearCacheFileSize) {
+            await ensureFile(tmpFile);
+            await copy(entry.path, tmpFile, { overwrite: true });
+        }
+    }
+    // another option would be that Deno allow us to clear cache import for a given file
+    // or to do dynamic import without cache
 }
 
 function tmpJoin(path: string) {

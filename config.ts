@@ -23,6 +23,9 @@ if (Deno.args.includes('watch')) {
 if (Deno.args.includes('serve')) {
     Deno.env.set('ADKA_SERVE', 'true');
 }
+if (Deno.args.includes('--debug')) {
+    Deno.env.set('ADKA_DEBUG', 'true');
+}
 
 const env = Deno.env.toObject();
 
@@ -37,10 +40,17 @@ export let config = {
     pagesSuffix: (env.ADKA_PAGES_SUFFIX || '.page') as string,
     baseUrl: (env.ADKA_BASE_URL || '/') as string,
     startScript: (env.ADKA_START_SCRIPT || 'start.ts') as string,
+    debug: env.ADKA_DEBUG === 'true',
     dev: watch || env.ADKA_DEV === 'true',
     watch,
     serve,
     port: (env.ADKA_PORT ? Number(env.ADKA_PORT) : 8080) as number,
+
+    // This is used when we copy the file to skip cache of dyn import
+    // this options define the max size of a file to copy
+    clearCacheFileSize: (env.ADKA_CLEAR_CACHE_FILE_SIZE
+        ? Number(env.ADKA_CLEAR_CACHE_FILE_SIZE)
+        : 2000000) as number, // 2mb
 };
 
 export let paths = {

@@ -8,6 +8,7 @@ export async function serve() {
             port: config.port,
             root: config.distStatic,
             watcher: null,
+            debug: config.debug,
         };
         await server.server(options);
     }
