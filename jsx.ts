@@ -19,7 +19,7 @@ export const jsx = <P extends NodePropsType = NodePropsType>(
     ...children: NullableChildType[]
 ) => {
     addDeps(caller.default());
-    return jsxHtml.jsx(element, props, ...children);
+    return jsxHtml.jsx(element as any, props, ...children as any);
 };
 
 export const React = {
@@ -30,6 +30,6 @@ export const React = {
         ...children: NullableChildType[]
     ) {
         addDeps(caller.default());
-        return jsxHtml.jsx(element, props, ...children);
+        return jsxHtml.jsx(element as any, props, ...children as any);
     },
 };

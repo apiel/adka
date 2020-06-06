@@ -1,4 +1,4 @@
-export * as jsxHtml from 'https://raw.githubusercontent.com/apiel/jsx-html/1.1.1/mod.ts';
+export * as jsxHtml from 'https://raw.githubusercontent.com/apiel/jsx-html/1.2.0/mod.ts';
 export {
     NodePropsType,
     NullableChildType,
