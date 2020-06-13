@@ -8,7 +8,7 @@ import { config, paths } from '../config.ts';
 import { saveComponentToHtml } from './saveComponentToHtml.ts';
 import { generateDynamicPage } from './generateDynamicPage.ts';
 import { buildTree } from '../watcher.ts';
-import { reloadPage } from '../server.ts';
+// import { reloadPage } from '../server.ts';
 
 export interface PagePath {
     file: string;
@@ -37,5 +37,5 @@ export async function generatePage(file: string) {
         await saveComponentToHtml(page, htmlPath);
     }
     buildTree(file);
-    reloadPage(page);
+    // reloadPage(page);
 }

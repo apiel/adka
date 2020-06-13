@@ -4,6 +4,8 @@ deno run -c tsconfig.json --allow-read --allow-write --allow-env --reload https:
 
 ## ToDo
 
+- HMR use worker, instead to copy the whole folder.
+
 - debug fn
 
 - think about a way to split site in multiple isolated part

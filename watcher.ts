@@ -85,11 +85,16 @@ async function consumeEvents() {
 
     // Because Deno doesn't allow us to clear the cache on dynamic import
     // We have to copy the files in a different folder to trick Deno
-    await tmpCpy();
-    for (const file of genFiles) {
-        await generatePage(tmpJoin(file));
-    }
-    await rmTmpFolder();
+    // await tmpCpy();
+    // for (const file of genFiles) {
+    //     await generatePage(tmpJoin(file));
+    // }
+    // await rmTmpFolder();
+    const worker = new Worker(new URL('watchWorker.ts', import.meta.url).href, {
+        type: 'module',
+        deno: true,
+    });
+    worker.postMessage([...genFiles]);
 }
 
 async function tmpCpy() {

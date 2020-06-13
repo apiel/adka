@@ -1,4 +1,6 @@
-import { server } from './deps.ts';
+// do not include in deps till https://github.com/oakserver/oak/issues/165
+// import { server } from './deps.ts';
+import * as server from 'https://raw.githubusercontent.com/apiel/adka_server/0.1.3/mod.ts';
 import { config } from './config.ts';
 import { Page } from './mod.ts';
 
