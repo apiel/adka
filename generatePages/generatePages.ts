@@ -8,6 +8,7 @@ import { config, paths } from '../config.ts';
 import { saveComponentToHtml } from './saveComponentToHtml.ts';
 import { generateDynamicPage } from './generateDynamicPage.ts';
 import { buildTree } from '../watcher.ts';
+// ToDo fix reload
 // import { reloadPage } from '../server.ts';
 
 export interface PagePath {
