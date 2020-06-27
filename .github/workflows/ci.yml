@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: denolib/setup-deno@master
-      - run: deno upgrade
-        if: ${{ success() || failure() }}
+      - if: ${{ success() || failure() }}
+        run: deno upgrade
       - run: deno --version
       - run: cp demo/depsCI.ts demo/deps.ts
       - run: deno run -c tsconfig.json --allow-read --allow-write --allow-env --allow-net --unstable adka.ts
