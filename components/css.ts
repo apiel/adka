@@ -11,10 +11,8 @@ export interface CssOptions {
 }
 
 export async function css(src: string, options?: CssOptions) {
-    console.log('css src', src);
     // getSrc must stay at this level
     const file = getSrc(src);
-    console.log('css getSrc', file);
     if (!file) {
         return null;
     }
