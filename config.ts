@@ -86,7 +86,7 @@ function initPaths() {
 export let tmpFolder = '';
 
 export function setTmpFolder() {
-    tmpFolder = join(Deno.dir('tmp')!, `adka-${+new Date()}`);
+    tmpFolder = Deno.makeTempDirSync({ prefix: 'adka-' });
 }
 
 export async function rmTmpFolder() {
