@@ -2,16 +2,17 @@ import { dirname, join } from 'https://deno.land/std/path/mod.ts';
 import { caller } from '../../deps.ts';
 
 export function getSrc(src: string) {
-    console.log(`call getSrc "${src}"`, src.indexOf('.'), src.startsWith('.'));
     if (src.startsWith('.')) {
         // !! caller must stay in this function
         const parentFile = caller.default(caller.up + 1);
+        console.log('parentFile in getSrc', parentFile);
         if (parentFile) {
             src = join(dirname(parentFile), src);
         } else {
             return;
         }
     }
+    console.log('src in getSrc', src);
     if (!src.startsWith('/')) {
         throw new Error(
             `Invalid file format ${src}. File path must start by '.' or '/'.`,
