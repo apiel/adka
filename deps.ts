@@ -16,7 +16,7 @@ export {
 } from 'https://raw.githubusercontent.com/apiel/logol/master/mod.ts';
 
 import { cleanFilename } from './utils/cleanFilename.ts';
-import * as callerOrigin from 'https://raw.githubusercontent.com/apiel/caller/0.1.3/caller.ts';
+import * as callerOrigin from 'https://raw.githubusercontent.com/apiel/caller/0.1.4/caller.ts';
 const caller = {
     ...callerOrigin,
     default: callerOrigin.default.bind({ cb: cleanFilename }),
