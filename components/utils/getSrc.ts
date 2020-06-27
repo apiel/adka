@@ -2,8 +2,8 @@ import { dirname, join } from 'https://deno.land/std/path/mod.ts';
 import { caller } from '../../deps.ts';
 
 export function getSrc(src: string) {
-    console.log(`call getSrc "${src}"`);
-    if (src.indexOf('.') === 0) {
+    console.log(`call getSrc "${src}"`, src.indexOf('.'), src.startsWith('.'));
+    if (src.startsWith('.')) {
         // !! caller must stay in this function
         const parentFile = caller.default(caller.up + 1);
         if (parentFile) {
