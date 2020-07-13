@@ -2,6 +2,7 @@
     "cmds": {
         "snap": "./snap.sh",
         "test": "./test.sh",
+        "up-deno-types": "deno types > deno.d.ts",
         "start": "deno run -c tsconfig.json --allow-read --allow-write --allow-env --allow-net --unstable adka.ts",
         "serve": "deno run -c tsconfig.json --allow-read --allow-write --allow-env --allow-net --unstable adka.ts serve"
     }

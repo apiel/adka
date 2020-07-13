@@ -3,6 +3,66 @@
 /// <reference no-default-lib="true" />
 /// <reference lib="esnext" />
 
+/** Deno provides extra properties on `import.meta`.  These are included here
+ * to ensure that these are still available when using the Deno namepsace in
+ * conjunction with other type libs, like `dom`. */
+declare interface ImportMeta {
+  /** A string representation of the fully qualified module URL. */
+  url: string;
+
+  /** A flag that indicates if the current module is the main module that was
+   * called when starting the program under Deno.
+   *
+   * ```ts
+   * if (import.meta.main) {
+   *   // this was loaded as the main module, maybe do some bootstrapping
+   * }
+   * ```
+   */
+  main: boolean;
+}
+
+/** Deno supports user timing Level 3 (see: https://w3c.github.io/user-timing)
+ * which is not widely supported yet in other runtimes.  These types are here
+ * so that these features are still available when using the Deno namespace
+ * in conjunction with other type libs, like `dom`. */
+declare interface Performance {
+  /** Stores a timestamp with the associated name (a "mark"). */
+  mark(markName: string, options?: PerformanceMarkOptions): PerformanceMark;
+
+  /** Stores the `DOMHighResTimeStamp` duration between two marks along with the
+   * associated name (a "measure"). */
+  measure(
+    measureName: string,
+    options?: PerformanceMeasureOptions
+  ): PerformanceMeasure;
+}
+
+declare interface PerformanceMarkOptions {
+  /** Metadata to be included in the mark. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  detail?: any;
+
+  /** Timestamp to be used as the mark time. */
+  startTime?: number;
+}
+
+declare interface PerformanceMeasureOptions {
+  /** Metadata to be included in the measure. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  detail?: any;
+
+  /** Timestamp to be used as the start time or string to be used as start
+   * mark.*/
+  start?: string | number;
+
+  /** Duration between the start and end times. */
+  duration?: number;
+
+  /** Timestamp to be used as the end time or string to be used as end mark. */
+  end?: string | number;
+}
+
 declare namespace Deno {
   /** A set of error constructors that are raised by Deno APIs. */
   export const errors: {
@@ -38,6 +98,9 @@ declare namespace Deno {
     fn: () => void | Promise<void>;
     name: string;
     ignore?: boolean;
+    /** If at lease one test has `only` set to true, only run tests that have
+     * `only` set to true and fail the test suite. */
+    only?: boolean;
     /** Check that the number of async completed ops after the test is the same
      * as number of dispatched ops. Defaults to true.*/
     sanitizeOps?: boolean;
@@ -129,6 +192,16 @@ declare namespace Deno {
      *
      * Requires `allow-env` permission. */
     set(key: string, value: string): void;
+
+    /** Delete the value of an environment variable.
+     *
+     * ```ts
+     * Deno.env.set("SOME_VAR", "Value"));
+     * Deno.env.delete("SOME_VAR");  // outputs "Undefined"
+     * ```
+     *
+     * Requires `allow-env` permission. */
+    delete(key: string): void;
 
     /** Returns a snapshot of the environment variables at invocation.
      *
@@ -409,7 +482,7 @@ declare namespace Deno {
    *
    * Requires `allow-read` and/or `allow-write` permissions depending on options.
    */
-  export function openSync(path: string, options?: OpenOptions): File;
+  export function openSync(path: string | URL, options?: OpenOptions): File;
 
   /** Open a file and resolve to an instance of `Deno.File`.  The
    * file does not need to previously exist if using the `create` or `createNew`
@@ -424,7 +497,10 @@ declare namespace Deno {
    *
    * Requires `allow-read` and/or `allow-write` permissions depending on options.
    */
-  export function open(path: string, options?: OpenOptions): Promise<File>;
+  export function open(
+    path: string | URL,
+    options?: OpenOptions
+  ): Promise<File>;
 
   /** Creates a file if none exists or truncates an existing file and returns
    *  an instance of `Deno.File`.
@@ -435,7 +511,7 @@ declare namespace Deno {
    *
    * Requires `allow-read` and `allow-write` permissions.
    */
-  export function createSync(path: string): File;
+  export function createSync(path: string | URL): File;
 
   /** Creates a file if none exists or truncates an existing file and resolves to
    *  an instance of `Deno.File`.
@@ -446,7 +522,7 @@ declare namespace Deno {
    *
    * Requires `allow-read` and `allow-write` permissions.
    */
-  export function create(path: string): Promise<File>;
+  export function create(path: string | URL): Promise<File>;
 
   /** Synchronously read from a resource ID (`rid`) into an array buffer (`buffer`).
    *
@@ -710,10 +786,12 @@ declare namespace Deno {
      *
      * The slice is valid for use only until the next buffer modification (that
      * is, only until the next call to a method like `read()`, `write()`,
-     * `reset()`, or `truncate()`). The slice aliases the buffer content at
+     * `reset()`, or `truncate()`). If `options.copy` is false the slice aliases the buffer content at
      * least until the next buffer modification, so immediate changes to the
-     * slice will affect the result of future reads. */
-    bytes(): Uint8Array;
+     * slice will affect the result of future reads.
+     * @param options Defaults to `{ copy: true }`
+     */
+    bytes(options?: { copy?: boolean }): Uint8Array;
     /** Returns whether the unread portion of the buffer is empty. */
     empty(): boolean;
     /** A read only number of bytes of the unread portion of the buffer. */
@@ -880,7 +958,7 @@ declare namespace Deno {
    * Defaults to throwing error if the directory already exists.
    *
    * Requires `allow-write` permission. */
-  export function mkdirSync(path: string, options?: MkdirOptions): void;
+  export function mkdirSync(path: string | URL, options?: MkdirOptions): void;
 
   /** Creates a new directory with the specified path.
    *
@@ -893,7 +971,10 @@ declare namespace Deno {
    * Defaults to throwing error if the directory already exists.
    *
    * Requires `allow-write` permission. */
-  export function mkdir(path: string, options?: MkdirOptions): Promise<void>;
+  export function mkdir(
+    path: string | URL,
+    options?: MkdirOptions
+  ): Promise<void>;
 
   export interface MakeTempOptions {
     /** Directory where the temporary directory should be created (defaults to
@@ -1001,7 +1082,7 @@ declare namespace Deno {
    * NOTE: This API currently throws on Windows
    *
    * Requires `allow-write` permission. */
-  export function chmodSync(path: string, mode: number): void;
+  export function chmodSync(path: string | URL, mode: number): void;
 
   /** Changes the permission of a specific file/directory of specified path.
    * Ignores the process's umask.
@@ -1031,7 +1112,7 @@ declare namespace Deno {
    * NOTE: This API currently throws on Windows
    *
    * Requires `allow-write` permission. */
-  export function chmod(path: string, mode: number): Promise<void>;
+  export function chmod(path: string | URL, mode: number): Promise<void>;
 
   /** Synchronously change owner of a regular file or directory. This functionality
    * is not available on Windows.
@@ -1045,10 +1126,14 @@ declare namespace Deno {
    * Throws Error (not implemented) if executed on Windows
    *
    * @param path path to the file
-   * @param uid user id (UID) of the new owner
-   * @param gid group id (GID) of the new owner
+   * @param uid user id (UID) of the new owner, or `null` for no change
+   * @param gid group id (GID) of the new owner, or `null` for no change
    */
-  export function chownSync(path: string, uid: number, gid: number): void;
+  export function chownSync(
+    path: string | URL,
+    uid: number | null,
+    gid: number | null
+  ): void;
 
   /** Change owner of a regular file or directory. This functionality
    * is not available on Windows.
@@ -1062,10 +1147,14 @@ declare namespace Deno {
    * Throws Error (not implemented) if executed on Windows
    *
    * @param path path to the file
-   * @param uid user id (UID) of the new owner
-   * @param gid group id (GID) of the new owner
+   * @param uid user id (UID) of the new owner, or `null` for no change
+   * @param gid group id (GID) of the new owner, or `null` for no change
    */
-  export function chown(path: string, uid: number, gid: number): Promise<void>;
+  export function chown(
+    path: string | URL,
+    uid: number | null,
+    gid: number | null
+  ): Promise<void>;
 
   export interface RemoveOptions {
     /** Defaults to `false`. If set to `true`, path will be removed even if
@@ -1084,7 +1173,7 @@ declare namespace Deno {
    * directory and the `recursive` option isn't set to `true`.
    *
    * Requires `allow-write` permission. */
-  export function removeSync(path: string, options?: RemoveOptions): void;
+  export function removeSync(path: string | URL, options?: RemoveOptions): void;
 
   /** Removes the named file or directory.
    *
@@ -1097,7 +1186,10 @@ declare namespace Deno {
    * directory and the `recursive` option isn't set to `true`.
    *
    * Requires `allow-write` permission. */
-  export function remove(path: string, options?: RemoveOptions): Promise<void>;
+  export function remove(
+    path: string | URL,
+    options?: RemoveOptions
+  ): Promise<void>;
 
   /** Synchronously renames (moves) `oldpath` to `newpath`. Paths may be files or
    * directories.  If `newpath` already exists and is not a directory,
@@ -1142,7 +1234,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function readTextFileSync(path: string): string;
+  export function readTextFileSync(path: string | URL): string;
 
   /** Asynchronously reads and returns the entire contents of a file as a utf8
    *  encoded string. Reading a directory returns an empty data array.
@@ -1153,7 +1245,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function readTextFile(path: string): Promise<string>;
+  export function readTextFile(path: string | URL): Promise<string>;
 
   /** Synchronously reads and returns the entire contents of a file as an array
    * of bytes. `TextDecoder` can be used to transform the bytes to string if
@@ -1166,7 +1258,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function readFileSync(path: string): Uint8Array;
+  export function readFileSync(path: string | URL): Uint8Array;
 
   /** Reads and resolves to the entire contents of a file as an array of bytes.
    * `TextDecoder` can be used to transform the bytes to string if required.
@@ -1179,7 +1271,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function readFile(path: string): Promise<Uint8Array>;
+  export function readFile(path: string | URL): Promise<Uint8Array>;
 
   /** A FileInfo describes a file and is returned by `stat`, `lstat`,
    * `statSync`, `lstatSync`. */
@@ -1297,7 +1389,7 @@ declare namespace Deno {
    * Throws error if `path` is not a directory.
    *
    * Requires `allow-read` permission. */
-  export function readDirSync(path: string): Iterable<DirEntry>;
+  export function readDirSync(path: string | URL): Iterable<DirEntry>;
 
   /** Reads the directory given by `path` and returns an async iterable of
    * `Deno.DirEntry`.
@@ -1311,7 +1403,7 @@ declare namespace Deno {
    * Throws error if `path` is not a directory.
    *
    * Requires `allow-read` permission. */
-  export function readDir(path: string): AsyncIterable<DirEntry>;
+  export function readDir(path: string | URL): AsyncIterable<DirEntry>;
 
   /** Synchronously copies the contents and permissions of one file to another
    * specified path, by default creating a new file if needed, else overwriting.
@@ -1323,7 +1415,10 @@ declare namespace Deno {
    *
    * Requires `allow-read` permission on fromPath.
    * Requires `allow-write` permission on toPath. */
-  export function copyFileSync(fromPath: string, toPath: string): void;
+  export function copyFileSync(
+    fromPath: string | URL,
+    toPath: string | URL
+  ): void;
 
   /** Copies the contents and permissions of one file to another specified path,
    * by default creating a new file if needed, else overwriting. Fails if target
@@ -1335,7 +1430,10 @@ declare namespace Deno {
    *
    * Requires `allow-read` permission on fromPath.
    * Requires `allow-write` permission on toPath. */
-  export function copyFile(fromPath: string, toPath: string): Promise<void>;
+  export function copyFile(
+    fromPath: string | URL,
+    toPath: string | URL
+  ): Promise<void>;
 
   /** Returns the full path destination of the named symbolic link.
    *
@@ -1372,7 +1470,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function lstat(path: string): Promise<FileInfo>;
+  export function lstat(path: string | URL): Promise<FileInfo>;
 
   /** Synchronously returns a `Deno.FileInfo` for the specified `path`. If
    * `path` is a symlink, information for the symlink will be returned instead of
@@ -1384,7 +1482,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function lstatSync(path: string): FileInfo;
+  export function lstatSync(path: string | URL): FileInfo;
 
   /** Resolves to a `Deno.FileInfo` for the specified `path`. Will always
    * follow symlinks.
@@ -1396,7 +1494,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function stat(path: string): Promise<FileInfo>;
+  export function stat(path: string | URL): Promise<FileInfo>;
 
   /** Synchronously returns a `Deno.FileInfo` for the specified `path`. Will
    * always follow symlinks.
@@ -1408,7 +1506,7 @@ declare namespace Deno {
    * ```
    *
    * Requires `allow-read` permission. */
-  export function statSync(path: string): FileInfo;
+  export function statSync(path: string | URL): FileInfo;
 
   /** Options for writing to a file. */
   export interface WriteFileOptions {
@@ -1438,7 +1536,7 @@ declare namespace Deno {
    * `false`.
    */
   export function writeFileSync(
-    path: string,
+    path: string | URL,
     data: Uint8Array,
     options?: WriteFileOptions
   ): void;
@@ -1458,7 +1556,7 @@ declare namespace Deno {
    * Requires `allow-write` permission, and `allow-read` if `options.create` is `false`.
    */
   export function writeFile(
-    path: string,
+    path: string | URL,
     data: Uint8Array,
     options?: WriteFileOptions
   ): Promise<void>;
@@ -1472,7 +1570,11 @@ declare namespace Deno {
    *
    * Requires `allow-write` permission, and `allow-read` if `options.create` is `false`.
    */
-  export function writeTextFileSync(path: string, data: string): void;
+  export function writeTextFileSync(
+    path: string | URL,
+    data: string,
+    options?: WriteFileOptions
+  ): void;
 
   /** Asynchronously write string `data` to the given `path`, by default creating a new file if needed,
    * else overwriting.
@@ -1483,7 +1585,11 @@ declare namespace Deno {
    *
    * Requires `allow-write` permission, and `allow-read` if `options.create` is `false`.
    */
-  export function writeTextFile(path: string, data: string): Promise<void>;
+  export function writeTextFile(
+    path: string | URL,
+    data: string,
+    options?: WriteFileOptions
+  ): Promise<void>;
 
   /** Synchronously truncates or extends the specified file, to reach the
    * specified `len`.  If `len` is not specified then the entire file contents
@@ -1544,6 +1650,9 @@ declare namespace Deno {
     close(): void;
     /** Return the address of the `Listener`. */
     readonly addr: Addr;
+
+    /** Return the rid of the `Listener`. */
+    readonly rid: number;
 
     [Symbol.asyncIterator](): AsyncIterableIterator<Conn>;
   }
@@ -1738,12 +1847,18 @@ declare namespace Deno {
     options?: { recursive: boolean }
   ): AsyncIterableIterator<FsEvent>;
 
-  export class Process {
+  export class Process<T extends RunOptions = RunOptions> {
     readonly rid: number;
     readonly pid: number;
-    readonly stdin?: Writer & Closer;
-    readonly stdout?: Reader & Closer;
-    readonly stderr?: Reader & Closer;
+    readonly stdin: T["stdin"] extends "piped"
+      ? Writer & Closer
+      : (Writer & Closer) | null;
+    readonly stdout: T["stdout"] extends "piped"
+      ? Reader & Closer
+      : (Reader & Closer) | null;
+    readonly stderr: T["stderr"] extends "piped"
+      ? Reader & Closer
+      : (Reader & Closer) | null;
     /** Resolves to the current status of the process. */
     status(): Promise<ProcessStatus>;
     /** Buffer the stdout until EOF and return it as `Uint8Array`.
@@ -1826,10 +1941,20 @@ declare namespace Deno {
    * Details of the spawned process are returned.
    *
    * Requires `allow-run` permission. */
-  export function run(opt: RunOptions): Process;
+  export function run<T extends RunOptions = RunOptions>(opt: T): Process<T>;
 
-  interface InspectOptions {
+  export interface InspectOptions {
+    /** Traversal depth for nested objects. Defaults to 4. */
     depth?: number;
+    /** Sort Object, Set and Map entries by key. Defaults to false. */
+    sorted?: boolean;
+    /** Add a trailing comma for multiline collections. Defaults to false. */
+    trailingComma?: boolean;
+    /** Try to fit more than one entry of a collection on the same line.
+     * Defaults to true. */
+    compact?: boolean;
+    /** The maximum number of iterable entries to print. Defaults to 100. */
+    iterableLimit?: number;
   }
 
   /** Converts the input into a string that has the same format as printed by
@@ -1859,9 +1984,9 @@ declare namespace Deno {
    *      const inStringFormat = Deno.inspect(new A()); // "x=10, y=hello"
    *      console.log(inStringFormat);  // prints "x=10, y=hello"
    *
-   * Finally, a number of output options are also available.
+   * Finally, you can also specify the depth to which it will format.
    *
-   *      const out = Deno.inspect(obj, {showHidden: true, depth: 4, colors: true, indentLevel: 2});
+   *      Deno.inspect({a: {b: {c: {d: 'hello'}}}}, {depth: 2}); // { a: { b: [Object] } }
    *
    */
   export function inspect(value: unknown, options?: InspectOptions): string;
@@ -2126,6 +2251,10 @@ declare function clearInterval(id?: number): void;
  */
 declare function clearTimeout(id?: number): void;
 
+interface VoidFunction {
+  (): void;
+}
+
 /** A microtask is a short function which is executed after the function or
  * module which created it exits and only if the JavaScript execution stack is
  * empty, but before returning control to the event loop being used to drive the
@@ -2134,7 +2263,7 @@ declare function clearTimeout(id?: number): void;
  *
  *     queueMicrotask(() => { console.log('This event loop stack is complete'); });
  */
-declare function queueMicrotask(func: Function): void;
+declare function queueMicrotask(func: VoidFunction): void;
 
 declare var console: Console;
 declare var crypto: Crypto;
@@ -2172,11 +2301,6 @@ declare function removeEventListener(
   callback: EventListenerOrEventListenerObject | null,
   options?: boolean | EventListenerOptions | undefined
 ): void;
-
-declare interface ImportMeta {
-  url: string;
-  main: boolean;
-}
 
 interface DomIterable<K, V> {
   keys(): IterableIterator<K>;
@@ -3144,7 +3268,7 @@ interface URL {
 
 declare const URL: {
   prototype: URL;
-  new (url: string | URL, base?: string | URL): URL;
+  new (url: string, base?: string | URL): URL;
   createObjectURL(object: any): string;
   revokeObjectURL(url: string): void;
 };
@@ -3207,7 +3331,10 @@ declare class Worker extends EventTarget {
        *
        * ```ts
        * // mod.ts
-       * const worker = new Worker("./deno_worker.ts", { type: "module", deno: true });
+       * const worker = new Worker(
+       *   new URL("deno_worker.ts", import.meta.url).href,
+       *   { type: "module", deno: true }
+       * );
        * worker.postMessage({ cmd: "readFile", fileName: "./log.txt" });
        *
        * // deno_worker.ts
@@ -3242,7 +3369,36 @@ declare class Worker extends EventTarget {
   terminate(): void;
 }
 
-declare namespace performance {
+declare type PerformanceEntryList = PerformanceEntry[];
+
+declare interface Performance {
+  /** Removes the stored timestamp with the associated name. */
+  clearMarks(markName?: string): void;
+
+  /** Removes stored timestamp with the associated name. */
+  clearMeasures(measureName?: string): void;
+
+  getEntries(): PerformanceEntryList;
+  getEntriesByName(name: string, type?: string): PerformanceEntryList;
+  getEntriesByType(type: string): PerformanceEntryList;
+
+  /** Stores a timestamp with the associated name (a "mark"). */
+  mark(markName: string, options?: PerformanceMarkOptions): PerformanceMark;
+
+  /** Stores the `DOMHighResTimeStamp` duration between two marks along with the
+   * associated name (a "measure"). */
+  measure(
+    measureName: string,
+    options?: PerformanceMeasureOptions
+  ): PerformanceMeasure;
+  /** Stores the `DOMHighResTimeStamp` duration between two marks along with the
+   * associated name (a "measure"). */
+  measure(
+    measureName: string,
+    startMark?: string,
+    endMark?: string
+  ): PerformanceMeasure;
+
   /** Returns a current time from Deno's start in milliseconds.
    *
    * Use the permission flag `--allow-hrtime` return a precise value.
@@ -3252,7 +3408,68 @@ declare namespace performance {
    * console.log(`${t} ms since start!`);
    * ```
    */
-  export function now(): number;
+  now(): number;
+}
+
+declare const Performance: {
+  prototype: Performance;
+  new (): Performance;
+};
+
+declare const performance: Performance;
+
+declare interface PerformanceMarkOptions {
+  /** Metadata to be included in the mark. */
+  detail?: any;
+
+  /** Timestamp to be used as the mark time. */
+  startTime?: number;
+}
+
+declare interface PerformanceMeasureOptions {
+  /** Metadata to be included in the measure. */
+  detail?: any;
+
+  /** Timestamp to be used as the start time or string to be used as start
+   * mark.*/
+  start?: string | number;
+
+  /** Duration between the start and end times. */
+  duration?: number;
+
+  /** Timestamp to be used as the end time or string to be used as end mark. */
+  end?: string | number;
+}
+
+/** Encapsulates a single performance metric that is part of the performance
+ * timeline. A performance entry can be directly created by making a performance
+ * mark or measure (for example by calling the `.mark()` method) at an explicit
+ * point in an application. */
+declare class PerformanceEntry {
+  readonly duration: number;
+  readonly entryType: string;
+  readonly name: string;
+  readonly startTime: number;
+  toJSON(): any;
+}
+
+/** `PerformanceMark` is an abstract interface for `PerformanceEntry` objects
+ * with an entryType of `"mark"`. Entries of this type are created by calling
+ * `performance.mark()` to add a named `DOMHighResTimeStamp` (the mark) to the
+ * performance timeline. */
+declare class PerformanceMark extends PerformanceEntry {
+  readonly detail: any;
+  readonly entryType: "mark";
+  constructor(name: string, options?: PerformanceMarkOptions);
+}
+
+/** `PerformanceMeasure` is an abstract interface for `PerformanceEntry` objects
+ * with an entryType of `"measure"`. Entries of this type are created by calling
+ * `performance.measure()` to add a named `DOMHighResTimeStamp` (the measure)
+ * between two marks to the performance timeline. */
+declare class PerformanceMeasure extends PerformanceEntry {
+  readonly detail: any;
+  readonly entryType: "measure";
 }
 
 interface EventInit {
