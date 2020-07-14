@@ -22,7 +22,7 @@ echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.bashrc
 
 > **Note:** install is not mendatory to use Adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts`
 
-> **Note:** to speed up compilation, use the --no-check option from deno https://deno.land/manual/getting_started/typescript#--no-check-option
+> **Note:** to speed up compilation, use the `--no-check` option from deno https://deno.land/manual/getting_started/typescript#--no-check-option
 
 ## Getting started
 
