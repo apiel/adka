@@ -14,7 +14,9 @@ export async function adka() {
     if (await exists(paths.distStatic)) {
         await Deno.remove(paths.distStatic, { recursive: true });
     }
-    await copy(paths.srcAssets, paths.distAssets);
+    if (await exists(paths.srcAssets)) {
+        await copy(paths.srcAssets, paths.distAssets);
+    }
     if (await exists(paths.startScript)) {
         info('Execute start script.');
         const start = await import(`file://${paths.startScript}`);

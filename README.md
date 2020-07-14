@@ -11,7 +11,7 @@ Even if Adka is first intended to do SSG, you can use it as well for [server sid
 Use deno installer: https://deno.land/manual/tools/script_installer
 
 ```sh
-deno install -f --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts
+deno install -f --allow-read --allow-write --allow-env --allow-net --unstable https://raw.githubusercontent.com/apiel/adka/master/adka.ts
 ```
 
 On linux you might need to specify the deno bin path:
@@ -20,7 +20,7 @@ On linux you might need to specify the deno bin path:
 echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.bashrc
 ```
 
-> **Note:** install is not mendatory to use Adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net https://raw.githubusercontent.com/apiel/adka/master/adka.ts`
+> **Note:** install is not mendatory to use Adka, you can also run `deno run --allow-read --allow-write --allow-env --allow-net --unstable https://raw.githubusercontent.com/apiel/adka/master/adka.ts`
 
 > **Note:** to speed up compilation, use the `--no-check` option from deno https://deno.land/manual/getting_started/typescript#--no-check-option
 
