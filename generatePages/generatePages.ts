@@ -31,7 +31,7 @@ export async function generatePage(file: string) {
     const { default: page } = await import(`file://${file}`);
     const htmlPath = join(paths.distStatic, getRoutePath(file));
     log('Load page component', file);
-    if (page.getPropsList) {
+    if (page?.getPropsList) {
         await generateDynamicPage(page, htmlPath, page.getPropsList);
     } else {
         await saveComponentToHtml(page, htmlPath);
